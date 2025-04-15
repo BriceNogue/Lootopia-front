@@ -1,0 +1,53 @@
+
+/*** Variables ***/
+$background-color: #333;
+$text-color: #fff;
+$link-hover-color: #ffcc00;
+$link-active-color: #ff9900;
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-color: $background-color;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .header-logo {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        color: $text-color;
+    
+        img {
+            width: 40px;
+            height: auto;
+        }
+    }
+    
+    .header-nav {
+        display: inline-flex;
+        gap: 15px;
+    
+        a {
+            text-decoration: none;
+            color: $text-color;
+            font-size: 13px;
+    
+            &:hover {
+                color: $link-hover-color;
+            }
+
+            &.active {
+                font-weight: bold;
+                color: $link-active-color;
+                border-bottom: 2px solid $link-active-color;
+            }
+        }
+    }
+}

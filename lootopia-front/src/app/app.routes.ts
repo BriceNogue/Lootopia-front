@@ -25,7 +25,7 @@ export const routes: Routes = [
         component: LoginComponent
     },
     {
-        path: 'user-profile',
+        path: 'user-profile/:id',
         component: UserProfilComponent
     },
     {

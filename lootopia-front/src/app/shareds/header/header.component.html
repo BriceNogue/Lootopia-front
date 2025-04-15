@@ -1,1 +1,15 @@
-<p>header works!</p>
+<header>
+    <div class="header-logo">
+        <img src="assets/images/logo.png" alt="LTP" />
+        <span>Lootopia</span>
+    </div>
+    <nav class="header-nav">
+        <a routerLink="/landing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Landing</a>
+        <a routerLink="/register" routerLinkActive="active">Register</a>
+        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a routerLink="/user-profile/1" routerLinkActive="active">User profile</a>
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/hunt-details/1" routerLinkActive="active">Hunt details</a>
+        <a routerLink="/not-found" routerLinkActive="active">Not found</a>
+    </nav>
+</header>
