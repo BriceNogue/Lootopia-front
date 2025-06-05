@@ -1,0 +1,138 @@
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    // text-align: center;
+  
+    .title {
+      font-family: 'Roboto', serif;
+      font-style: italic;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  
+    .subtitle {
+      font-family: 'Roboto', serif;
+      font-style: italic;
+      color: #242423;
+      margin-bottom: 0.5rem;
+    }
+  
+    .description {
+      font-family: 'Roboto', serif;
+      color: #333533;
+      margin-bottom: 2rem;
+      max-width: 90%;
+    }
+   
+    .container-gold {
+      background: #F5CB5C;
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 100%;
+      margin-bottom: 2rem;
+    }
+  
+    // Responsive : tablette et +
+    @media screen and (min-width: 600px) {
+      .title {
+        font-size: 3rem;
+      }
+  
+      .description {
+        font-size: 1rem;
+      }
+  
+      .image-container {
+        max-width: 480px;
+      }
+    }
+  
+    @media screen and (min-width: 900px) {
+      .landing-container {
+        padding: 3rem;
+      }
+  
+      .image-container {
+        max-width: 600px;
+      }
+  
+      .overlay-text {
+        font-size: 1.5rem;
+      }
+    }
+}
+
+// -------- IMAGE MAPS -------- //
+.full-width-image {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-bottom: 2rem;
+
+  .image {
+    width: 100%;
+    height: auto;
+    border-radius: 0;
+    display: block;
+  }
+
+  .overlay-text {
+    position: absolute;
+    bottom: 40%;
+    width: 100%;
+    color: #fff;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 3rem;
+    text-align: center;
+    text-shadow: 0 0 5px #000;
+  }
+}
+// -------- IMAGE MAPS -------- //
+
+.separator {
+  height: 1px;
+  background-color: #DCE1DE; // gris clair
+  width: 90%;
+  margin: 3rem auto;
+}
+
+
+// -------- FEATURES SECTION -------- //
+.features-section {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem 1rem;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.feature-box {
+  flex: 1 1 300px;
+  max-width: 400px;
+  text-align: center;
+
+  .feature-icon {
+    font-size: 2.5rem;
+    color: #F5CB5C;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-text {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #444;
+    margin: 0 auto;
+    max-width: 90%;
+  }
+}
+// -------- FEATURES SECTION -------- //
