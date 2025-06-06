@@ -22,127 +22,47 @@
     </div>
     <div class="hunts">
         <p class="hunts-title">Liste de chasses</p>
-        <div class="hunts-items">
-            <div class="hunt-item">
-                <div class="hunt-header">
-                    <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
-                    <p class="hunt-user-name">Creator User</p>
-                </div>
-                <div class="hunt-image">
-                    <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
-                </div>
-                <div class="hunt-body">
-                    <div class="hunt-infos">
-                        <div class="hunt-title-price">
-                            <p>Chasse aux oeufs</p>
-                            <p>{{ 10 | currency:'EUR':'symbol':'1.2-2'}} </p>
-                        </div>
-                        <div class="hunt-date">
-                            <p>Du 28/07/2025 au 28/07/2025</p>
-                        </div>
-                    </div>
-                    <div class="hunt-description">
-                        <p>
-                            Venez découvrir les oeufs cachés dans la nature ! 
-                            Des récompenses à la clé !
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Cum, doloribus ipsa? Velit ut, distinctio, earum autem 
-                            sed magnam optio doloribus odit enim ratione excepturi 
-                            repudiandae sit eos adipisci ipsum atque.
-                        </p>
-                    </div>
-                </div>
+        @if (hunts == undefined) 
+        {
+            <div class="hunts-loading">
+                <p class="hunts-loading-text">Recherche des chasses disponibles ...</p>
             </div>
-            <div class="hunt-item">
-                <div class="hunt-header">
-                    <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
-                    <p class="hunt-user-name">Creator User</p>
-                </div>
-                <div class="hunt-image">
-                    <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
-                </div>
-                <div class="hunt-body">
-                    <div class="hunt-infos">
-                        <div class="hunt-title-price">
-                            <p>Chasse aux oeufs</p>
-                            <p>{{ 10 | currency:'EUR':'symbol':'1.2-2'}} </p>
-                        </div>
-                        <div class="hunt-date">
-                            <p>Du 28/07/2025 au 28/07/2025</p>
-                        </div>
-                    </div>
-                    <div class="hunt-description">
-                        <p>
-                            Venez découvrir les oeufs cachés dans la nature ! 
-                            Des récompenses à la clé !
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Cum, doloribus ipsa? Velit ut, distinctio, earum autem 
-                            sed magnam optio doloribus odit enim ratione excepturi 
-                            repudiandae sit eos adipisci ipsum atque.
-                        </p>
-                    </div>
-                </div>
+        }
+        @else if (hunts.length == 0) 
+        {
+            <div class="empty-hunts">
+                <img src="assets/images/empty-hunts.svg" alt="Empty hunts" class="empty-hunts-image">
+                <p class="empty-hunts-text">Aucune chasse à afficher</p>
             </div>
-            <div class="hunt-item">
-                <div class="hunt-header">
-                    <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
-                    <p class="hunt-user-name">Creator User</p>
-                </div>
-                <div class="hunt-image">
-                    <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
-                </div>
-                <div class="hunt-body">
-                    <div class="hunt-infos">
-                        <div class="hunt-title-price">
-                            <p>Chasse aux oeufs</p>
-                            <p>{{ 10 | currency:'EUR':'symbol':'1.2-2'}} </p>
+        }
+        @else {
+            <div class="hunts-items">
+                @for (hunt of hunts; track $index) {
+                    <div class="hunt-item">
+                        <div class="hunt-header">
+                            <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
+                            <p class="hunt-user-name">Creator User</p>
                         </div>
-                        <div class="hunt-date">
-                            <p>Du 28/07/2025 au 28/07/2025</p>
+                        <div class="hunt-image">
+                            <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
+                        </div>
+                        <div class="hunt-body">
+                            <div class="hunt-infos">
+                                <div class="hunt-title-price">
+                                    <p>{{ hunt.title }}</p>
+                                    <p>{{ hunt.price| currency:'EUR':'symbol':'1.2-2'}} </p>
+                                </div>
+                                <div class="hunt-date">
+                                    <p>{{ hunt.startDate.toLocaleDateString() }} au {{ hunt.endDate.toLocaleDateString() }}</p>
+                                </div>
+                            </div>
+                            <div class="hunt-description">
+                                <p>{{ hunt.description }}</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="hunt-description">
-                        <p>
-                            Venez découvrir les oeufs cachés dans la nature ! 
-                            Des récompenses à la clé !
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Cum, doloribus ipsa? Velit ut, distinctio, earum autem 
-                            sed magnam optio doloribus odit enim ratione excepturi 
-                            repudiandae sit eos adipisci ipsum atque.
-                        </p>
-                    </div>
-                </div>
+                }
             </div>
-            <div class="hunt-item">
-                <div class="hunt-header">
-                    <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
-                    <p class="hunt-user-name">Creator User</p>
-                </div>
-                <div class="hunt-image">
-                    <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
-                </div>
-                <div class="hunt-body">
-                    <div class="hunt-infos">
-                        <div class="hunt-title-price">
-                            <p>Chasse aux oeufs</p>
-                            <p>{{ 10 | currency:'EUR':'symbol':'1.2-2'}} </p>
-                        </div>
-                        <div class="hunt-date">
-                            <p>Du 28/07/2025 au 28/07/2025</p>
-                        </div>
-                    </div>
-                    <div class="hunt-description">
-                        <p>
-                            Venez découvrir les oeufs cachés dans la nature ! 
-                            Des récompenses à la clé !
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Cum, doloribus ipsa? Velit ut, distinctio, earum autem 
-                            sed magnam optio doloribus odit enim ratione excepturi 
-                            repudiandae sit eos adipisci ipsum atque.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }  
     </div>
 </div>

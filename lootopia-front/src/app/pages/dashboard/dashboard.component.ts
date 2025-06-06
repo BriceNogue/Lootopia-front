@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { HuntsService } from '../../services/hunts.service';
+import { HuntModel } from '../../models/hunt.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,8 +22,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashboardComponent {
   amount: number = 10.56;
+  public hunts: HuntModel[] | undefined; // Liste des chasses au trésor
+
+  private readonly huntService = inject(HuntsService);
   
   constructor(private currencyPipe: CurrencyPipe) {}
+
+  ngOnInit() {
+    this.hunts = this.getHunts(); // Récupération de la liste des chasses au trésor depuis le service
+  }
 
   formatCurrency(value: number): string {
     return this.currencyPipe.transform(value, 'USD', 'symbol', '1.0-0') || '';
@@ -46,4 +55,9 @@ export class DashboardComponent {
   formatDateTime(date: Date): string {
     return `${this.formatDate(date)} ${this.formatTime(date)}`;
   }
+
+  private getHunts() : HuntModel[] | undefined {
+    return this.huntService.getAll();
+  }
+
 }

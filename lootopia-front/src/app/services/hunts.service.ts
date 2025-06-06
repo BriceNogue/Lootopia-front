@@ -8,7 +8,7 @@ export class HuntsService {
 
   constructor() { }
 
-  huntsList : HuntModel[] = [
+  private huntsList : HuntModel[] = [
     {
       id: 1,
       title: 'Chasse aux oeufs de Pâques',
