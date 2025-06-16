@@ -1,0 +1,20 @@
+<div class="not-found-container">
+  <div class="not-found-content">
+    <div class="error-icon">
+      <i data-feather="alert-circle"></i>
+    </div>
+    <h1>404</h1>
+    <h2>Page non trouvée</h2>
+    <p>Désolé, la page que vous recherchez n'existe pas ou a été déplacée.</p>
+    <div class="actions">
+      <a routerLink="/" class="home-button">
+        <i data-feather="home"></i>
+        Retour à l'accueil
+      </a>
+      <button class="back-button" (click)="goBack()">
+        <i data-feather="arrow-left"></i>
+        Retour en arrière
+      </button>
+    </div>
+  </div>
+</div>
