@@ -1,85 +1,103 @@
-<div class="container">
-    <h2>Inscription</h2>
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<!-- Conteneur principal avec fond dégradé -->
+<div class="register-container">
+  <!-- Carte d'inscription avec effet de flou -->
+  <div class="register-card">
+    <!-- En-tête avec logo et titre -->
+    <div class="register-header">
+      <img src="assets/images/logo.png" alt="Lootopia Logo" class="logo">
+      <h1>Inscription</h1>
+    </div>
+
+    <!-- Formulaire d'inscription -->
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Champ nom d'utilisateur -->
       <div class="form-group">
         <label for="username">Nom d'utilisateur</label>
         <input 
-          id="username" 
           type="text" 
-          formControlName="username"
-          placeholder="Votre pseudo" 
-          required 
-        />
-        <div class="error-message" *ngIf="registerForm.get('username')?.errors?.['required'] && registerForm.get('username')?.touched">
-          Le nom d'utilisateur est requis
-        </div>
-        <div class="error-message" *ngIf="registerForm.get('username')?.errors?.['minlength'] && registerForm.get('username')?.touched">
-          Le nom d'utilisateur doit contenir au moins 3 caractères
+          id="username" 
+          formControlName="username" 
+          [class.error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+          placeholder="Entrez votre nom d'utilisateur">
+        <div class="error-message" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+          Le nom d'utilisateur est requis (minimum 3 caractères)
         </div>
       </div>
 
+      <!-- Champ email -->
       <div class="form-group">
-        <label for="email">Adresse mail</label>
+        <label for="email">Email</label>
         <input 
-          id="email" 
           type="email" 
-          formControlName="email"
-          placeholder="votre@email.com" 
-          required 
+          id="email" 
+          formControlName="email" 
+          [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
           (blur)="validateEmail()"
-        />
-        <div class="error-message">{{ emailError }}</div>
+          placeholder="Entrez votre email">
+        <div class="error-message" *ngIf="emailError">
+          {{ emailError }}
+        </div>
       </div>
 
+      <!-- Champ mot de passe -->
       <div class="form-group">
         <label for="password">Mot de passe</label>
         <input 
-          id="password" 
           type="password" 
-          formControlName="password"
-          placeholder="••••••••" 
-          required 
+          id="password" 
+          formControlName="password" 
+          [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
           (blur)="validatePassword()"
-        />
-        <div class="error-message">{{ passwordError }}</div>
-        <div class="password-requirements">
-          <p>Le mot de passe doit contenir :</p>
-          <ul>
-            <li [class.valid]="passwordRequirements.length">Au moins 8 caractères</li>
-            <li [class.valid]="passwordRequirements.uppercase">Une lettre majuscule</li>
-            <li [class.valid]="passwordRequirements.lowercase">Une lettre minuscule</li>
-            <li [class.valid]="passwordRequirements.number">Un chiffre</li>
-            <li [class.valid]="passwordRequirements.special">Un caractère spécial (&#64;$!%*?&)</li>
-          </ul>
+          placeholder="Créez votre mot de passe">
+        <div class="error-message" *ngIf="passwordError">
+          {{ passwordError }}
         </div>
       </div>
 
+      <!-- Liste des exigences du mot de passe -->
+      <div class="password-requirements">
+        <h3>Le mot de passe doit contenir :</h3>
+        <ul>
+          <li [class.valid]="passwordRequirements.length">Au moins 8 caractères</li>
+          <li [class.valid]="passwordRequirements.uppercase">Une lettre majuscule</li>
+          <li [class.valid]="passwordRequirements.lowercase">Une lettre minuscule</li>
+          <li [class.valid]="passwordRequirements.number">Un chiffre</li>
+          <li [class.valid]="passwordRequirements.special">Un caractère spécial (&#64;$!%*?&)</li>
+        </ul>
+      </div>
+
+      <!-- Champ confirmation du mot de passe -->
       <div class="form-group">
         <label for="confirmPassword">Confirmer le mot de passe</label>
         <input 
-          id="confirmPassword" 
           type="password" 
-          formControlName="confirmPassword"
-          placeholder="••••••••" 
-          required 
-        />
-        <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+          id="confirmPassword" 
+          formControlName="confirmPassword" 
+          [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+          placeholder="Confirmez votre mot de passe">
+        <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch']">
           Les mots de passe ne correspondent pas
         </div>
       </div>
 
-      <button type="submit" class="btn-primary" [disabled]="!registerForm.valid">S'inscrire</button>
-      <div class="links">
-        <p class="login-link" (click)="goToLogin()">J'ai déjà un compte</p>
-      </div>
-
-      <!-- Message de succès -->
-      <div class="success-message" *ngIf="showSuccess" [@fadeInOut]>
-        <div class="success-content">
-          <span class="success-icon">✓</span>
-          <p>Inscription réussie ! Redirection en cours...</p>
-        </div>
-      </div>
+      <!-- Bouton de soumission -->
+      <button 
+        type="submit" 
+        [disabled]="registerForm.invalid"
+        class="submit-button">
+        S'inscrire
+      </button>
     </form>
+
+    <!-- Lien vers la page de connexion -->
+    <div class="login-link">
+      Déjà un compte ? <a (click)="goToLogin()">Se connecter</a>
+    </div>
+
+    <!-- Message de succès avec animation -->
+    <div class="success-message" *ngIf="showSuccess" @fadeInOut>
+      Inscription réussie ! Redirection...
+    </div>
   </div>
+</div>
   

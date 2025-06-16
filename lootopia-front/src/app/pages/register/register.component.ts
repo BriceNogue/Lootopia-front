@@ -52,12 +52,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Surveiller les changements du mot de passe
     this.registerForm.get('password')?.valueChanges.subscribe(value => {
       this.checkPasswordRequirements(value);
     });
 
-    // Surveiller les changements de la confirmation du mot de passe
     this.registerForm.get('confirmPassword')?.valueChanges.subscribe(() => {
       this.checkPasswordMatch();
     });
@@ -115,22 +113,17 @@ export class RegisterComponent implements OnInit {
   async onSubmit() {
     if (this.registerForm.valid) {
       try {
-        // Simulation d'un appel API
         await this.registerUser(this.registerForm.value);
         
-        // Afficher le message de succès
         this.showSuccess = true;
         
-        // Attendre 2 secondes avant la redirection
         setTimeout(() => {
           this.router.navigate(['/landing']);
         }, 2000);
       } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
-        // Gérer l'erreur ici
       }
     } else {
-      // Marquer tous les champs comme touchés pour afficher les erreurs
       Object.keys(this.registerForm.controls).forEach(key => {
         const control = this.registerForm.get(key);
         control?.markAsTouched();
@@ -139,7 +132,6 @@ export class RegisterComponent implements OnInit {
   }
 
   private async registerUser(userData: any): Promise<void> {
-    // Simulation d'un appel API
     return new Promise((resolve) => {
       setTimeout(() => {
         console.log('Données d\'inscription:', userData);

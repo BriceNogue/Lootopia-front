@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { NotfoundComponent } from './pages/notfound/notfound.component';
 import { HuntDetailsComponent } from './pages/hunt-details/hunt-details.component';
 import { UserProfilComponent } from './pages/user-profil/user-profil.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     {
@@ -23,6 +24,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent
     },
     {
         path: 'user-profile/:id',

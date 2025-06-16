@@ -1,1 +1,72 @@
-<p>login works!</p>
+<!-- Conteneur principal avec fond dégradé -->
+<div class="login-container">
+  <!-- Carte de connexion avec effet de flou -->
+  <div class="login-card">
+    <!-- En-tête avec logo et titre -->
+    <div class="login-header">
+      <img src="assets/images/logo.png" alt="Lootopia Logo" class="logo">
+      <h1>Connexion</h1>
+    </div>
+
+    <!-- Formulaire de connexion -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <!-- Champ email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          formControlName="email" 
+          [class.error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          placeholder="Entrez votre email">
+        <div class="error-message" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          {{ validateEmail() }}
+        </div>
+      </div>
+
+      <!-- Champ mot de passe -->
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          type="password" 
+          id="password" 
+          formControlName="password" 
+          [class.error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          placeholder="Entrez votre mot de passe">
+        <div class="error-message" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          Le mot de passe est requis (minimum 8 caractères)
+        </div>
+      </div>
+
+      <!-- Message d'erreur général -->
+      <div class="error-message general-error" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Bouton de connexion avec état de chargement -->
+      <button 
+        type="submit" 
+        [disabled]="loginForm.invalid || isLoading"
+        class="submit-button">
+        <span *ngIf="!isLoading">Se connecter</span>
+        <span *ngIf="isLoading" class="loading-spinner"></span>
+      </button>
+    </form>
+
+    <!-- Lien mot de passe oublié -->
+    <div class="forgot-password-link">
+      <a routerLink="/forgot-password">Mot de passe oublié ?</a>
+    </div>
+
+    <!-- Lien vers la page d'inscription -->
+    <div class="register-link">
+      Pas encore de compte ? <a (click)="goToRegister()">S'inscrire</a>
+    </div>
+
+    <!-- Message de succès avec animation -->
+    <div class="success-message" *ngIf="showSuccess" @fadeInOut>
+      Connexion réussie ! Redirection...
+    </div>
+  </div>
+</div>
+  
