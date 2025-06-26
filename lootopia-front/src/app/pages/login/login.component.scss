@@ -1,0 +1,245 @@
+@use "sass:color";
+
+// Variables pour les couleurs et les dimensions
+$primary-color: #4a90e2;
+$error-color: #e74c3c;
+$success-color: #2ecc71;
+$background-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+$card-background: rgba(255, 255, 255, 0.1);
+$text-color: #ffffff;
+$input-background: rgba(255, 255, 255, 0.05);
+$input-border: rgba(255, 255, 255, 0.1);
+
+// Styles du conteneur principal
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $background-gradient;
+  padding: 20px;
+}
+
+// Styles de la carte de connexion
+.login-card {
+  background: $card-background;
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+// Styles de l'en-tête
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  .logo {
+    width: 120px;
+    margin-bottom: 1rem;
+    animation: fadeInDown 0.5s ease-out;
+  }
+
+  h1 {
+    color: $text-color;
+    font-size: 2rem;
+    margin: 0;
+    animation: fadeInUp 0.5s ease-out;
+  }
+}
+
+// Styles du formulaire
+.login-form {
+  .form-group {
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.5s ease-out;
+
+    label {
+      display: block;
+      color: $text-color;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid $input-border;
+      border-radius: 8px;
+      background: $input-background;
+      color: $text-color;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      }
+
+      &.error {
+        border-color: $error-color;
+      }
+
+      &::placeholder {
+        color: rgba($text-color, 0.5);
+      }
+    }
+  }
+}
+
+// Styles des messages d'erreur
+.error-message {
+  color: $error-color;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+
+  &.general-error {
+    text-align: center;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background: rgba($error-color, 0.1);
+    border-radius: 4px;
+  }
+}
+
+// Styles du bouton de soumission
+.submit-button {
+  width: 100%;
+  padding: 1rem;
+  background: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: color.adjust($primary-color, $lightness: -10%);
+  }
+
+  &:disabled {
+    background: rgba($primary-color, 0.5);
+    cursor: not-allowed;
+  }
+
+  // Animation du spinner de chargement
+  .loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+  }
+}
+
+// Styles du lien mot de passe oublié
+.forgot-password-link {
+  text-align: center;
+  margin: 1rem 0;
+  color: $text-color;
+  animation: fadeIn 0.5s ease-out;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Styles du lien d'inscription
+.register-link {
+  text-align: center;
+  margin-top: 1rem;
+  color: $text-color;
+  animation: fadeIn 0.5s ease-out;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Styles du message de succès
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: $success-color;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out;
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+  
