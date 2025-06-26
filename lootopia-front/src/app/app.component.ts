@@ -47,7 +47,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.router.navigate(['/landing']);
+    // La redirection est maintenant gérée par les routes
   }
 
   ngOnDestroy() {
