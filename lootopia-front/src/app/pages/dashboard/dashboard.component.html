@@ -1,1 +1,68 @@
-<p>dashboard works!</p>
+<div class="contents">
+    <div class="stats">
+        <p class="stats-title">Vos statistiques de chasses</p>
+        <div class="stats-items">
+            <div class="stat-item hunt-carried-out">
+                <p class="stat-item-key">Effectuées</p>
+                <p class="stat-item-value">15</p>
+            </div>
+            <div class="stat-item successful-hunts">
+                <p class="stat-item-key">Réussies</p>
+                <p class="stat-item-value">9</p>
+            </div>
+            <div class="stat-item failed-hunts">
+                <p class="stat-item-key">Echouées</p>
+                <p class="stat-item-value">4</p>
+            </div>
+            <div class="stat-item abandoned-hunts">
+                <p class="stat-item-key">Abandonnées</p>
+                <p class="stat-item-value">2</p>
+            </div>
+        </div>
+    </div>
+    <div class="hunts">
+        <p class="hunts-title">Liste de chasses</p>
+        @if (hunts == undefined) 
+        {
+            <div class="hunts-loading">
+                <p class="hunts-loading-text">Recherche des chasses disponibles ...</p>
+            </div>
+        }
+        @else if (hunts.length == 0) 
+        {
+            <div class="empty-hunts">
+                <img src="assets/images/empty-hunts.svg" alt="Empty hunts" class="empty-hunts-image">
+                <p class="empty-hunts-text">Aucune chasse à afficher</p>
+            </div>
+        }
+        @else {
+            <div class="hunts-items">
+                @for (hunt of hunts; track $index) {
+                    <div class="hunt-item">
+                        <div class="hunt-header">
+                            <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
+                            <p class="hunt-user-name">Creator User</p>
+                        </div>
+                        <div class="hunt-image">
+                            <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
+                        </div>
+                        <div class="hunt-body">
+                            <div class="hunt-infos">
+                                <div class="hunt-title-price">
+                                    <p>{{ hunt.title }}</p>
+                                    <p>{{ hunt.price| currency:'EUR':'symbol':'1.2-2'}} </p>
+                                </div>
+                                <div class="hunt-date">
+                                    <p>{{ hunt.startDate.toLocaleDateString() }} au {{ hunt.endDate.toLocaleDateString() }}</p>
+                                </div>
+                            </div>
+                            <div class="hunt-description">
+                                <p>{{ hunt.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }  
+    </div>
+</div>
