@@ -1,7 +1,7 @@
 //#region Imports
 //#region Directives
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 //#endregion Directives
@@ -18,9 +18,11 @@ import { FooterComponent } from './shareds/footer/footer.component';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [
     //#region Directives
     RouterOutlet,
+    RouterModule,
     //#endregion Directives
 
     //#region Moduls
