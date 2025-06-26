@@ -1,1 +1,85 @@
-<p>register works!</p>
+<div class="container">
+    <h2>Inscription</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input 
+          id="username" 
+          type="text" 
+          formControlName="username"
+          placeholder="Votre pseudo" 
+          required 
+        />
+        <div class="error-message" *ngIf="registerForm.get('username')?.errors?.['required'] && registerForm.get('username')?.touched">
+          Le nom d'utilisateur est requis
+        </div>
+        <div class="error-message" *ngIf="registerForm.get('username')?.errors?.['minlength'] && registerForm.get('username')?.touched">
+          Le nom d'utilisateur doit contenir au moins 3 caractères
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Adresse mail</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email"
+          placeholder="votre@email.com" 
+          required 
+          (blur)="validateEmail()"
+        />
+        <div class="error-message">{{ emailError }}</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          id="password" 
+          type="password" 
+          formControlName="password"
+          placeholder="••••••••" 
+          required 
+          (blur)="validatePassword()"
+        />
+        <div class="error-message">{{ passwordError }}</div>
+        <div class="password-requirements">
+          <p>Le mot de passe doit contenir :</p>
+          <ul>
+            <li [class.valid]="passwordRequirements.length">Au moins 8 caractères</li>
+            <li [class.valid]="passwordRequirements.uppercase">Une lettre majuscule</li>
+            <li [class.valid]="passwordRequirements.lowercase">Une lettre minuscule</li>
+            <li [class.valid]="passwordRequirements.number">Un chiffre</li>
+            <li [class.valid]="passwordRequirements.special">Un caractère spécial (&#64;$!%*?&)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input 
+          id="confirmPassword" 
+          type="password" 
+          formControlName="confirmPassword"
+          placeholder="••••••••" 
+          required 
+        />
+        <div class="error-message" *ngIf="registerForm.get('confirmPassword')?.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched">
+          Les mots de passe ne correspondent pas
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="!registerForm.valid">S'inscrire</button>
+      <div class="links">
+        <p class="login-link" (click)="goToLogin()">J'ai déjà un compte</p>
+      </div>
+
+      <!-- Message de succès -->
+      <div class="success-message" *ngIf="showSuccess" [@fadeInOut]>
+        <div class="success-content">
+          <span class="success-icon">✓</span>
+          <p>Inscription réussie ! Redirection en cours...</p>
+        </div>
+      </div>
+    </form>
+  </div>
+  
