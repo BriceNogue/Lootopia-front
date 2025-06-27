@@ -1,14 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HuntModel } from '../models/hunt.model';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HuntsService {
 
-  constructor() { }
+  private readonly _HuntsURL : string = 'https://lootopia-backend.onrender.com/api/chasse/'; // URL de l'API des chasses au trésor
+
+  constructor(private http: HttpClient) { }
+
+  private log (response: any) {
+    console.table(response);
+  }
+
+  private handleError(error: Error, errorValue: any) {
+    console.error("Error hunt: " + error);
+    return of(errorValue);
+  }
 
   private huntsList : HuntModel[] = [
+    /*
     {
       id: 1,
       title: 'Chasse aux oeufs de Pâques',
@@ -117,13 +131,20 @@ export class HuntsService {
       creatorId: 2,
       createdAt: new Date('2025-06-15')
     }
+    */
   ]
 
-  public getAll(): HuntModel[] {
-    return this.huntsList;
+  public getAll(): Observable<HuntModel[]> {
+    return this.http.get<HuntModel[]>(this._HuntsURL).pipe(
+      tap((response) => this.log("Get All Hunts : " + response)),
+      catchError((error) => this.handleError(error, this.huntsList))
+    );
   }
 
-  public getById(id: number): HuntModel | undefined {
-    return this.huntsList.find(hunt => hunt.id === id);
+  public getById(id: number): Observable<HuntModel | undefined> {
+    return this.http.get<HuntModel>(`${this._HuntsURL}${id}`).pipe(
+      tap((response) => this.log("Get Hunt By Id : " + response)),
+      catchError((error) => this.handleError(error, undefined))
+    );
   }
 }

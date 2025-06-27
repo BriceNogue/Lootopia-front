@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HuntsService } from '../../services/hunts.service';
 import { HuntModel } from '../../models/hunt.model';
+import { parseIsoDate, parseIsoDateTime } from '../../utils/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,12 +26,16 @@ export class DashboardComponent {
   amount: number = 10.56;
   public hunts: HuntModel[] | undefined; // Liste des chasses au trésor
 
-  private readonly huntService = inject(HuntsService);
+  //private readonly huntService = inject(HuntsService);
   
-  constructor(private currencyPipe: CurrencyPipe) {}
+  constructor(
+    private currencyPipe: CurrencyPipe, 
+    private huntService: HuntsService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
-    this.hunts = this.getHunts(); // Récupération de la liste des chasses au trésor depuis le service
+    this.getHunts(); // Récupération de la liste des chasses au trésor depuis le service
   }
 
   formatCurrency(value: number): string {
@@ -56,8 +62,20 @@ export class DashboardComponent {
     return `${this.formatDate(date)} ${this.formatTime(date)}`;
   }
 
-  private getHunts() : HuntModel[] | undefined {
-    return this.huntService.getAll();
+  public parseIsoDateTime(isoString: string, forTime: string =''): string {
+    const date = parseIsoDateTime(isoString, forTime);
+    return date;
+  }
+
+  private getHunts() : void{
+    this.huntService.getAll().subscribe({
+      next: data => this.hunts = data,
+      error: err => console.error('Error fetching hunts:', err)
+    });
+  }
+
+  public goToHuntDetail(id: number): void {
+    this.router.navigate(['/hunt/'+id])
   }
 
 }

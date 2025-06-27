@@ -42,7 +42,7 @@ export const routes: Routes = [
         component: DashboardComponent
     },
     {
-        path: 'hunt-details/:id',
+        path: 'hunt/:id',
         component: HuntDetailsComponent
     },
     {

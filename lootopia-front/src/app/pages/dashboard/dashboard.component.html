@@ -36,28 +36,31 @@
             </div>
         }
         @else {
-            <div class="hunts-items">
+            <div class="hunts-cards">
                 @for (hunt of hunts; track $index) {
-                    <div class="hunt-item">
-                        <div class="hunt-header">
-                            <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
-                            <p class="hunt-user-name">Creator User</p>
-                        </div>
-                        <div class="hunt-image">
-                            <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
-                        </div>
-                        <div class="hunt-body">
-                            <div class="hunt-infos">
-                                <div class="hunt-title-price">
-                                    <p>{{ hunt.title }}</p>
-                                    <p>{{ hunt.price| currency:'EUR':'symbol':'1.2-2'}} </p>
-                                </div>
-                                <div class="hunt-date">
-                                    <p>{{ hunt.startDate.toLocaleDateString() }} au {{ hunt.endDate.toLocaleDateString() }}</p>
-                                </div>
+                    <div class="hunt-card-container">
+                        <div class="hunt-card" (click)="goToHuntDetail(hunt.id)">
+                            <div class="hunt-header">
+                                <img src="assets/images/logo.png" alt="." class="hunt-user-avatar">
+                                <p class="hunt-user-name">{{ hunt.createur }}</p>
                             </div>
-                            <div class="hunt-description">
-                                <p>{{ hunt.description }}</p>
+                            <div class="hunt-image">
+                                <img src="assets/images/dashboard-card-image.svg" alt="Lootopia" class="hunt-image-content">
+                            </div>
+                            <div class="hunt-body">
+                                <div class="hunt-infos">
+                                    <div class="hunt-title-price">
+                                        <p>{{ hunt.titre }}</p>
+                                        <p>{{ hunt.prix| currency:'EUR':'symbol':'1.2-2'}} </p>
+                                    </div>
+                                    <div class="hunt-date">
+                                        <p>Du {{ parseIsoDateTime(hunt.date_debut.toString(), "dés ") }}</p>
+                                        <span>Au {{ parseIsoDateTime(hunt.date_fin.toString(), "à ") }}</span>
+                                    </div>
+                                </div>
+                                <!-- <div class="hunt-description">
+                                    <p>{{ hunt.description }}</p>
+                                </div> -->
                             </div>
                         </div>
                     </div>
