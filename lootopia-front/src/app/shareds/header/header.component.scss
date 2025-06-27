@@ -1,9 +1,9 @@
-
 /*** Variables ***/
 $background-color: #333;
 $text-color: #fff;
 $link-hover-color: #ffcc00;
 $link-active-color: #ff9900;
+$mobile-breakpoint: 770px;
 
 header {
     position: absolute;
@@ -29,6 +29,46 @@ header {
             height: auto;
         }
     }
+
+    .burger-menu {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 24px;
+        position: relative;
+        z-index: 2;
+
+        span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: $text-color;
+            position: absolute;
+            left: 0;
+            transition: all 0.3s ease;
+
+            &:nth-child(1) { top: 0; }
+            &:nth-child(2) { top: 50%; transform: translateY(-50%); }
+            &:nth-child(3) { bottom: 0; }
+        }
+
+        &.active {
+            span {
+                &:nth-child(1) {
+                    transform: translateY(11px) rotate(45deg);
+                }
+                &:nth-child(2) {
+                    opacity: 0;
+                }
+                &:nth-child(3) {
+                    transform: translateY(-11px) rotate(-45deg);
+                }
+            }
+        }
+    }
     
     .header-nav {
         display: inline-flex;
@@ -47,6 +87,44 @@ header {
                 font-weight: bold;
                 color: $link-active-color;
                 border-bottom: 2px solid $link-active-color;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $mobile-breakpoint) {
+    header {
+        .burger-menu {
+            display: block;
+        }
+
+        .header-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 250px;
+            height: 100vh;
+            background-color: $background-color;
+            flex-direction: column;
+            padding: 80px 20px 20px;
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+
+            &.active {
+                right: 0;
+            }
+
+            a {
+                padding: 10px 0;
+                width: 100%;
+                text-align: left;
+                font-size: 16px;
+
+                &.active {
+                    border-bottom: none;
+                    border-left: 3px solid $link-active-color;
+                    padding-left: 10px;
+                }
             }
         }
     }
