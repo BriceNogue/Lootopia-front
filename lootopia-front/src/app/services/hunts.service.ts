@@ -147,4 +147,11 @@ export class HuntsService {
       catchError((error) => this.handleError(error, undefined))
     );
   }
+
+  public getByCreatorId(creatorId: number): Observable<HuntModel[]> {
+    return this.http.get<HuntModel[]>(`${this._HuntsURL}creator/${creatorId}`).pipe(
+      tap((response) => this.log("Get Hunts By Creator Id : " + response)),
+      catchError((error) => this.handleError(error, []))
+    );
+  }
 }
