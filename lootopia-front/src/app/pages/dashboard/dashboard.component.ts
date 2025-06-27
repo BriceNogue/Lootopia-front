@@ -29,7 +29,14 @@ export class DashboardComponent {
   constructor(private currencyPipe: CurrencyPipe) {}
 
   ngOnInit() {
-    this.hunts = this.getHunts(); // Récupération de la liste des chasses au trésor depuis le service
+    this.huntService.getAll().subscribe({
+      next: (data) => {
+        this.hunts = data;
+      },
+      error: (err) => {
+        // Gérer l'erreur si besoin
+      }
+    });
   }
 
   formatCurrency(value: number): string {
@@ -55,9 +62,4 @@ export class DashboardComponent {
   formatDateTime(date: Date): string {
     return `${this.formatDate(date)} ${this.formatTime(date)}`;
   }
-
-  private getHunts() : HuntModel[] | undefined {
-    return this.huntService.getAll();
-  }
-
 }

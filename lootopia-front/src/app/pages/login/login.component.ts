@@ -117,10 +117,19 @@ export class LoginComponent implements OnInit {
         password: credentials.password
       }).toPromise();
       console.log('Réponse API login:', response);
-      if (response && response.token) {
-        const decoded: any = jwtDecode(response.token);
+      // Stockage des tokens si présents dans la réponse
+      if (response && response.access_token) {
+        localStorage.setItem('access_token', response.access_token);
+        console.log('Access token stocké dans le localStorage');
+      }
+      if (response && response.refresh_token) {
+        localStorage.setItem('refresh_token', response.refresh_token);
+        console.log('Refresh token stocké dans le localStorage');
+      }
+      if (response && response.access_token) {
+        // Décodage du token si besoin
+        const decoded: any = jwtDecode(response.access_token);
         this.welcomeMessage = `Bienvenue ${decoded.username || decoded.pseudo || ''} !`;
-        localStorage.setItem('token', response.token);
       } else if (response && response.username) {
         this.welcomeMessage = `Bienvenue ${response.username} !`;
       }
