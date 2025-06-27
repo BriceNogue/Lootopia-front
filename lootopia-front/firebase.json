@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/lootopia-front",
+    "public": "lootopia-front/dist/lootopia-front",
     "ignore": [
       "firebase.json",
       "**/.*",
