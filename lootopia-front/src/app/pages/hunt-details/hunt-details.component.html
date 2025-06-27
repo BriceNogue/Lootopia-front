@@ -1,1 +1,49 @@
-<p>hunt-details works!</p>
+<div class="hunt-details-wrapper" *ngIf="!loading && hunt; else loadingTpl">
+  <!-- SECTION DETAILS -->
+  <section class="hunt-section details-section">
+    <button class="back-btn" (click)="goBack()">
+      ← Retour
+    </button>
+    <h2 class="hunt-title">{{ hunt.titre }}</h2>
+    <div class="hunt-meta">
+      <span><strong>Créateur :</strong> {{ hunt.createur }}</span>
+      <span><strong>Lieu :</strong> {{ hunt.lieu }}</span>
+      <span><strong>Monde :</strong> {{ hunt.monde }}</span>
+      <span><strong>Date :</strong> {{ parseIsoDateTime(hunt.date_debut) }} → {{ parseIsoDateTime(hunt.date_fin) }}</span>
+      <span><strong>Participants :</strong> {{ hunt.nombre_participant }}</span>
+      <span><strong>Prix :</strong> {{ hunt.prix | currency:'EUR':'symbol':'1.2-2' }}</span>
+      <span><strong>Privée :</strong> {{ hunt.est_prive ? 'Oui' : 'Non' }}</span>
+      <span><strong>Thèmes :</strong> {{ hunt.themes.join(', ') }}</span>
+      <span><strong>Couleur :</strong> <span [style.background]="hunt.couleur" class="color-dot"></span> {{ hunt.couleur }}</span>
+    </div>
+    <div class="hunt-description">
+      <h3>Description</h3>
+      <p>{{ hunt.description }}</p>
+    </div>
+    <button class="register-btn" (click)="registerToHunt()">
+      S'inscrire
+    </button>
+  </section>
+
+  <!-- SECTION MESSAGERIE -->
+  <section class="hunt-section messagerie-section" *ngIf="hunt.messagerie_est_actif">
+    <h3>Messagerie</h3>
+    <div class="messages-list" *ngIf="messages?.length; else noMsg">
+      <div class="message-item" *ngFor="let msg of messages">
+        <span class="msg-author">{{ msg.auteur }}</span>
+        <span class="msg-date">{{ parseIsoDateTime(msg.date_heure.toString()) }}</span>
+        <div class="msg-content">{{ msg.content }}</div>
+      </div>
+    </div>
+    <ng-template #noMsg>
+      <div class="no-messages">Aucun message pour le moment.</div>
+    </ng-template>
+    <form class="message-form" (ngSubmit)="sendMessage()">
+      <input type="text" [(ngModel)]="newMessage" name="message" placeholder="Écrire un message..." required />
+      <button type="submit" [disabled]="!newMessage.trim()">Envoyer</button>
+    </form>
+  </section>
+</div>
+<ng-template #loadingTpl>
+  <div class="loading">Chargement des détails...</div>
+</ng-template>
