@@ -1,0 +1,78 @@
+.profil-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 2rem auto;
+  max-width: 1200px;
+}
+
+section {
+  background: #333;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2rem;
+  flex: 1 1 320px;
+  min-width: 300px;
+  max-width: 33%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.user-chasses .chasse-list {
+    max-height: 70vh;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+.user-info h3,
+.user-chasses h3,
+.create-chasse h3 {
+  color: #49A078;
+  margin-bottom: 1rem;
+}
+
+.chasse-card {
+  background: #333000;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-right: 10px;
+}
+
+.no-chasse {
+  color: #aaa;
+  font-style: italic;
+}
+
+.create-chasse form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.create-chasse input,
+.create-chasse textarea {
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.create-chasse button {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #49A078;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.create-chasse button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

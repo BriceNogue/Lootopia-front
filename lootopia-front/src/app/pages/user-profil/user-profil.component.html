@@ -1,1 +1,38 @@
-<p>user-profil works!</p>
+<div class="profil-container">
+  <section class="user-info">
+    <h3>Profil utilisateur</h3>
+    <div><strong>Pseudo :</strong> {{ utilisateur.pseudo }}</div>
+    <div><strong>Email :</strong> {{ utilisateur.mail }}</div>
+    <div><strong>Solde couronne :</strong> {{ utilisateur.solde_couronne }}</div>
+    <div><strong>Date activation :</strong> {{ parseIsoDateTime(utilisateur.date_activation.toString()) }}</div>
+    <div><strong>Date désactivation :</strong> {{ parseIsoDateTime(utilisateur.date_desactivation.toString()) || '—' }}</div>
+  </section>
+
+  <section class="user-chasses">
+    <h3>Chasses créées</h3>
+    <div *ngIf="chassesCreees.length; else noChasse">
+      <div class="chasse-list">
+        <div class="chasse-card" *ngFor="let chasse of chassesCreees">
+            <h4>{{ chasse.titre }}</h4>
+            <p>{{ chasse.description }}</p>
+            <div><strong>Début :</strong> {{ parseIsoDateTime(chasse.date_debut.toString()) }}</div>
+            <div><strong>Fin :</strong> {{ parseIsoDateTime(chasse.date_fin.toString()) }}</div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noChasse>
+      <div class="no-chasse">Aucune chasse créée.</div>
+    </ng-template>
+  </section>
+
+  <section class="create-chasse">
+    <h3>Créer une nouvelle chasse</h3>
+    <form (ngSubmit)="creerChasse()" #chasseForm="ngForm">
+      <input type="text" placeholder="Titre" [(ngModel)]="nouvelleChasse.titre" name="titre" required />
+      <textarea placeholder="Description" [(ngModel)]="nouvelleChasse.description" name="description" required></textarea>
+      <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_debut" name="date_debut" required />
+      <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_fin" name="date_fin" required />
+      <button type="submit" [disabled]="!chasseForm.form.valid">Créer</button>
+    </form>
+  </section>
+</div>
