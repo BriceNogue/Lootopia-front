@@ -1,6 +1,9 @@
 <div class="profil-container">
   <section class="user-info">
     <h3>Profil utilisateur</h3>
+    <div class="user-image">
+        <img src="assets/images/logo.png" alt="Lootopia logo with stylized crown and playful colors, set against a bright background evoking a sense of adventure and excitement" class="hunt-image-content">
+    </div>
     <div><strong>Pseudo :</strong> {{ utilisateur.pseudo }}</div>
     <div><strong>Email :</strong> {{ utilisateur.mail }}</div>
     <div><strong>Solde couronne :</strong> {{ utilisateur.solde_couronne }}</div>
@@ -26,13 +29,13 @@
   </section>
 
   <section class="create-chasse">
-    <h3>Créer une nouvelle chasse</h3>
-    <form (ngSubmit)="creerChasse()" #chasseForm="ngForm">
-      <input type="text" placeholder="Titre" [(ngModel)]="nouvelleChasse.titre" name="titre" required />
-      <textarea placeholder="Description" [(ngModel)]="nouvelleChasse.description" name="description" required></textarea>
-      <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_debut" name="date_debut" required />
-      <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_fin" name="date_fin" required />
-      <button type="submit" [disabled]="!chasseForm.form.valid">Créer</button>
-    </form>
+        <h3>Créer une nouvelle chasse</h3>
+            <form (ngSubmit)="creerChasse()" #chasseForm="ngForm">
+            <input type="text" placeholder="Titre" [(ngModel)]="nouvelleChasse.titre" name="titre" required />
+            <textarea placeholder="Description" [(ngModel)]="nouvelleChasse.description" name="description" required></textarea>
+            <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_debut" name="date_debut" required />
+            <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_fin" name="date_fin" required />
+            <button type="submit" [disabled]="!chasseForm.form.valid">Créer</button>
+        </form>
   </section>
 </div>

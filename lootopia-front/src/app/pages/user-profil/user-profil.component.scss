@@ -33,6 +33,14 @@ section {
   margin-bottom: 1rem;
 }
 
+.user-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
 .chasse-card {
   background: #333000;
   border-radius: 8px;

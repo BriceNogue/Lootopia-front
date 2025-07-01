@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { UserModel } from '../models/user.model';
+import { HuntModel } from '../models/hunt.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,13 @@ export class UsersService {
     return this.http.get<UserModel>(`${this._URL}${id}/`).pipe(
       tap((response) => this.log("Get User by ID : " + response)),
       catchError((error) => this.handleError(error, null))
+    );
+  }
+
+  public getByUserHunts(id: number): Observable<HuntModel[]> {
+    return this.http.get<HuntModel[]>(`${this._URL}${id}/chasses/`).pipe(
+      tap((response) => this.log("Get Hunts By Creator Id : " + response)),
+      catchError((error) => this.handleError(error, []))
     );
   }
 }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserModel } from '../../models/user.model';
 import { HuntModel } from '../../models/hunt.model';
 import { parseIsoDateTime } from '../../utils/common';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-user-profil',
@@ -12,15 +13,7 @@ import { parseIsoDateTime } from '../../utils/common';
   styleUrl: './user-profil.component.scss'
 })
 export class UserProfilComponent implements OnInit {
-  utilisateur: UserModel = {
-    id: 4,
-    pseudo: 'test',
-    mail: 'test@test.test',
-    creerChasse: false,
-    date_activation: '2025-06-17T16:57:42.084121Z',
-    date_desactivation:'',
-    solde_couronne: 0
-  };
+  public utilisateur!: UserModel;
 
   chassesCreees: HuntModel[] = [
     {
@@ -98,7 +91,8 @@ export class UserProfilComponent implements OnInit {
     // Ajoute d'autres chasses si besoin
   ];
 
-  // Formulaire de création de chasse
+  // Formulaire de création de chasse : Partial<Typeof HuntModel> permet de ne pas remplir tous les champs
+  // et de ne pas avoir d'erreur de type
   nouvelleChasse: Partial<HuntModel> = {
     titre: '',
     description: '',
@@ -106,13 +100,37 @@ export class UserProfilComponent implements OnInit {
     date_fin: new Date(),
   };
 
-  constructor() { }
+  constructor(private userService: UsersService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.getUserById(3);
+
+    // Récupération des chasses créées par l'utilisateur
+    this.userService.getByUserHunts(this.utilisateur.id).subscribe({
+      next: (chasses) => {
+        this.chassesCreees = chasses;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des chasses créées :', err);
+      }
+    });
+  }
 
   public parseIsoDateTime(isoString: string, forTime: string =''): string {
     const date = parseIsoDateTime(isoString, forTime);
     return date;
+  }
+
+  private getUserById(id: number) {
+    this.userService.getById(id).subscribe({
+      next: (user) => {
+        this.utilisateur = user;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération de l\'utilisateur :', err);
+      }
+    });
   }
 
   creerChasse() {

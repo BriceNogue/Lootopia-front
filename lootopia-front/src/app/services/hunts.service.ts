@@ -148,10 +148,10 @@ export class HuntsService {
     );
   }
 
-  public getByCreatorId(creatorId: number): Observable<HuntModel[]> {
-    return this.http.get<HuntModel[]>(`${this._HuntsURL}creator/${creatorId}`).pipe(
-      tap((response) => this.log("Get Hunts By Creator Id : " + response)),
-      catchError((error) => this.handleError(error, []))
+  public create(hunt: HuntModel): Observable<HuntModel> {
+    return this.http.post<HuntModel>(this._HuntsURL, hunt).pipe(
+      tap((response) => this.log("Create Hunt : " + response)),
+      catchError((error) => this.handleError(error, hunt))
     );
   }
 }
