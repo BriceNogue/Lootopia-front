@@ -3,7 +3,7 @@ export interface UserModel {
   pseudo: string;
   mail: string;
   creerChasse: boolean;
-  date_activation: Date | string;
-  date_desactivation: Date | string;
+  date_activation: string;
+  date_desactivation: string;
   solde_couronne: number;
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import { HuntModel } from '../models/hunt.model';
+import { HuntsService } from './hunts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,11 @@ import { HuntModel } from '../models/hunt.model';
 export class UsersService {
   // URL de l'API des utilisateurs
   private readonly _URL : string = 'https://lootopia-backend.onrender.com/api/user/';
+  private readonly _HuntsURL : string = 'https://lootopia-backend.onrender.com/api/chasse/';
   private users : UserModel[] = [];
+  private huntsList : HuntModel[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private huntService: HuntsService) { }
 
   private log(response: any) {
     console.table(response);
@@ -37,10 +40,19 @@ export class UsersService {
     );
   }
 
-  public getByUserHunts(id: number): Observable<HuntModel[]> {
-    return this.http.get<HuntModel[]>(`${this._URL}${id}/chasses/`).pipe(
-      tap((response) => this.log("Get Hunts By Creator Id : " + response)),
-      catchError((error) => this.handleError(error, []))
+  public getUserHunts(pseudo: string): Observable<HuntModel[]> {
+    return this.huntService.getAll().pipe(
+      tap((response) => this.log("Get Hunts By Creator : " + response)),
+      catchError((error) => this.handleError(error, [])),
+      // Filter hunts by creator pseudo
+      // Use map to filter the array of hunts
+      // (assuming getAll() returns Observable<HuntModel[]>)
+      // If getAll() returns Observable<HuntModel>, adjust accordingly
+      // Here, we assume getAll() returns Observable<HuntModel[]>
+      // and filter the array using Array.prototype.filter
+      // import 'map' from rxjs/operators if not already imported
+      // import { map } from 'rxjs/operators';
+      map((hunts: HuntModel[]) => hunts.filter(hunt => hunt.createur === pseudo))
     );
   }
 }

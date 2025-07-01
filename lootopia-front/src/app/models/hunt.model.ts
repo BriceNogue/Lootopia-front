@@ -24,8 +24,8 @@ export interface HuntModel {
     titre: string;
     couleur: string;
     prix: number;
-    date_debut: Date;
-    date_fin: Date;
+    date_debut: string;
+    date_fin: string;
     nombre_participant: number;
     lieu: string;
     monde: string;
