@@ -15,27 +15,9 @@ import { HuntsService } from '../../services/hunts.service';
   styleUrl: './user-profil.component.scss'
 })
 export class UserProfilComponent implements OnInit {
-  public utilisateur!: UserModel;
-
-  chassesCreees: HuntModel[] = [
-    /*{
-      id: 1,
-      titre: 'Chasse au trésor',
-      description: 'Trouvez le trésor caché dans la forêt.',
-      createur: 'test',
-      date_debut: new Date('2025-06-01T18:00:00.000Z'),
-      date_fin: new Date('2025-06-10T18:00:00.000Z'),
-      participants: [],
-      caches: [],
-      couleur: 'DJDJS00',
-      prix: 60,
-      nombre_participant: 0,
-      lieu: 'Nantes',
-      monde: 'Réel',
-      est_prive: false,
-      messagerie_est_actif: true,
-      themes: []
-    },
+  public utilisateur: UserModel | null = null;
+  public chassesCreees: HuntModel[] | undefined;
+  /*= [
     {
       id: 1,
       titre: 'Chasse au trésor',
@@ -89,9 +71,27 @@ export class UserProfilComponent implements OnInit {
       est_prive: false,
       messagerie_est_actif: true,
       themes: []
-    }*/
+    },
+    {
+      id: 1,
+      titre: 'Chasse au trésor',
+      description: 'Trouvez le trésor caché dans la forêt.',
+      createur: 'test',
+      date_debut: new Date('2025-06-01T18:00:00.000Z'),
+      date_fin: new Date('2025-06-10T18:00:00.000Z'),
+      participants: [],
+      caches: [],
+      couleur: 'DJDJS00',
+      prix: 60,
+      nombre_participant: 0,
+      lieu: 'Nantes',
+      monde: 'Réel',
+      est_prive: false,
+      messagerie_est_actif: true,
+      themes: []
+    }
     // Ajoute d'autres chasses si besoin
-  ];
+  ];*/
 
   // Formulaire de création de chasse : Partial<Typeof HuntModel> permet de ne pas remplir tous les champs
   // et de ne pas avoir d'erreur de type
@@ -113,14 +113,24 @@ export class UserProfilComponent implements OnInit {
     // Initialisation de l'utilisateur avec un pseudo par défaut pour éviter les erreurs 
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const idParam = this.route.snapshot.paramMap.get('id');
     const userId: number | null = idParam !== null ? Number(idParam) : null;
 
-    this.getUserById(userId || 0);
-    
+    await this.getUserById(userId || 0);
+    console.log('Utilisateur récupéré :', this.utilisateur);
+
+    // Si l'utilisateur n'est pas trouvé, on attend qu'il soit défini
+    // Cela peut être utile si l'utilisateur est récupéré de manière asynchrone
+    while (!this.utilisateur) {
+      console.log('En attente de l\'utilisateur...');
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Attente de 1 seconde
+    }
+
     // Récupération des chasses créées par l'utilisateur
-    this.getUserHunts(this.utilisateur.pseudo);
+    if (this.utilisateur && this.utilisateur.pseudo) {
+      this.getUserHunts(this.utilisateur.pseudo);
+    }
   }
 
   public parseIsoDateTime(isoString: string, forTime: string =''): string {
@@ -128,7 +138,7 @@ export class UserProfilComponent implements OnInit {
     return date;
   }
 
-  private getUserById(id: number) {
+  private async getUserById(id: number) : Promise<void> {
     this.userService.getById(id).subscribe({
       next: (user) => {
         this.utilisateur = user;
@@ -153,26 +163,27 @@ export class UserProfilComponent implements OnInit {
         id: 0,
         titre: this.nouvelleChasse.titre,
         description: this.nouvelleChasse.description,
-        createur: this.utilisateur.pseudo,
+        createur: this.utilisateur?.pseudo || '',
         date_debut: this.nouvelleChasse.date_debut,
         date_fin: this.nouvelleChasse.date_fin,
-        participants: [],
-        caches: [],
-        couleur: 'F00000',
+        participants: [0],
+        caches: [0],
+        couleur: '000000',
         prix: this.nouvelleChasse.prix || 0,
         nombre_participant: 0,
         lieu: this.nouvelleChasse.lieu || '',
         monde: this.nouvelleChasse.monde || '',
         est_prive: this.nouvelleChasse.est_prive || false,
         messagerie_est_actif: this.nouvelleChasse.messagerie_est_actif || false,
-        themes: []
+        themes: [1]
       };
       this.huntService.create(newHunt).subscribe({
         next: (createdHunt) => {
           alert('Chasse créée avec succès !');
+          this.getUserHunts(this.utilisateur?.pseudo || '');
           console.log('Chasse créée avec succès :', createdHunt);
+          //this.goToHuntDetail(createdHunt.id);
           // Réinitialiser le formulaire après la création
-          this.chassesCreees.push(newHunt);
           this.resetForm();
         },
         error: (err) => {
@@ -202,7 +213,7 @@ export class UserProfilComponent implements OnInit {
     this.router.navigate(['/hunt/'+id])
   }
 
-  public getUserHunts(pseudo: string): void {
+  private async getUserHunts(pseudo: string): Promise<void> {
     this.userService.getUserHunts(pseudo).subscribe({
       next: (hunts) => {
         this.chassesCreees = hunts;

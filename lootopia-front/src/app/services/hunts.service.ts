@@ -156,7 +156,7 @@ export class HuntsService {
   }
 
   public create(hunt: HuntModel): Observable<HuntModel> {
-    return this.http.post<HuntModel>(this._HuntsURL, hunt).pipe(
+    return this.http.post<HuntModel>(this._HuntsURL+"create/", hunt).pipe(
       tap((response) => this.log("Create Hunt : " + response)),
       catchError((error) => this.handleError(error, hunt))
     );

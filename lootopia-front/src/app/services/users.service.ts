@@ -41,7 +41,7 @@ export class UsersService {
   }
 
   public getUserHunts(pseudo: string): Observable<HuntModel[]> {
-    return this.huntService.getAll().pipe(
+    /*return this.huntService.getAll().pipe(
       tap((response) => this.log("Get Hunts By Creator : " + response)),
       catchError((error) => this.handleError(error, [])),
       // Filter hunts by creator pseudo
@@ -52,7 +52,13 @@ export class UsersService {
       // and filter the array using Array.prototype.filter
       // import 'map' from rxjs/operators if not already imported
       // import { map } from 'rxjs/operators';
-      map((hunts: HuntModel[]) => hunts.filter(hunt => hunt.createur === pseudo))
+      //map((hunts: HuntModel[]) => hunts.filter(hunt => hunt.createur === pseudo))
+    );*/
+
+    return this.huntService.getAll().pipe(
+      map((hunts: HuntModel[]) => hunts.filter(hunt => hunt.createur === pseudo)),
+      tap((response) => this.log("Get Hunts By Creator : " + response)),
+      catchError((error) => this.handleError(error, []))
     );
   }
 }

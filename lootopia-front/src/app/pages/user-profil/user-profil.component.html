@@ -13,7 +13,8 @@
 
   <section class="user-chasses">
     <h3>Chasses créées</h3>
-    <div *ngIf="chassesCreees.length; else noChasse">
+    {{ utilisateur.pseudo }} a créé {{ chassesCreees?.length || 0 }} chasse(s).
+    <div *ngIf="chassesCreees && chassesCreees.length; else noChasse">
       <div class="chasse-list">
         <div class="chasse-card" *ngFor="let chasse of chassesCreees" (click)="goToHuntDetail(chasse.id)">
             <h4>{{ chasse.titre }}</h4>
@@ -30,7 +31,7 @@
 
   <section class="create-chasse">
         <h3>Créer une nouvelle chasse</h3>
-            <form (ngSubmit)="creerChasse()" #chasseForm="ngForm">
+            <form (ngSubmit)="creerChasse()" #chasseForm="ngForm" method="post">
             <input type="text" placeholder="Titre" [(ngModel)]="nouvelleChasse.titre" name="titre" required />
             <textarea placeholder="Description" [(ngModel)]="nouvelleChasse.description" name="description" required></textarea>
             <input type="text" placeholder="Lieu" [(ngModel)]="nouvelleChasse.lieu" name="lieu" required />
