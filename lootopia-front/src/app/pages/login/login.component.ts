@@ -129,6 +129,7 @@ export class LoginComponent implements OnInit {
       if (response && response.access_token) {
         // Décodage du token si besoin
         const decoded: any = jwtDecode(response.access_token);
+        localStorage.setItem('userId', JSON.stringify(decoded.id));
         this.welcomeMessage = `Bienvenue ${decoded.username || decoded.pseudo || ''} !`;
       } else if (response && response.username) {
         this.welcomeMessage = `Bienvenue ${response.username} !`;
