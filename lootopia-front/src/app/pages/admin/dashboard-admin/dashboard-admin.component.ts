@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HuntsService } from '../../../services/hunts.service';
-import { HuntModel } from '../../../models/hunt.model';
+import { CreateHuntModel, GetHuntModel } from '../../../models/hunt.model';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   styleUrl: './dashboard-admin.component.scss'
 })
 export class DashboardAdminComponent {
-  hunts: HuntModel[] = [];
+  hunts: GetHuntModel[] = [];
   huntForm: FormGroup;
   isEditing: boolean = false;
   editingHuntId: number | null = null;
@@ -92,7 +92,7 @@ export class DashboardAdminComponent {
     }
   }
 
-  editHunt(hunt: HuntModel) {
+  editHunt(hunt: GetHuntModel) {
     this.isEditing = true;
     this.editingHuntId = hunt.id;
     this.huntForm.patchValue({
