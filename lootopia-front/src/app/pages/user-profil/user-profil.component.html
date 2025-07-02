@@ -1,1 +1,60 @@
-<p>user-profil works!</p>
+<div class="profil-container" *ngIf="utilisateur">
+  <section class="user-info">
+    <h3>Profil utilisateur</h3>
+    <div class="user-image">
+        <img src="assets/images/logo.png" alt="Lootopia logo with stylized crown and playful colors, set against a bright background evoking a sense of adventure and excitement" class="hunt-image-content">
+    </div>
+    <div><strong>Pseudo :</strong> {{ utilisateur.pseudo }}</div>
+    <div><strong>Email :</strong> {{ utilisateur.mail }}</div>
+    <div><strong>Solde couronne :</strong> {{ utilisateur.solde_couronne }}</div>
+    <div><strong>Date activation :</strong> {{ parseIsoDateTime(utilisateur.date_activation) }}</div>
+    <div><strong>Date désactivation :</strong> {{ parseIsoDateTime(utilisateur.date_desactivation) || '—' }}</div>
+  </section>
+
+  <section class="user-chasses">
+    <h3>Chasses créées</h3>
+    {{ utilisateur.pseudo }} a créé {{ chassesCreees?.length || 0 }} chasse(s).
+    <div *ngIf="chassesCreees && chassesCreees.length; else noChasse">
+      <div class="chasse-list">
+        <div class="chasse-card" *ngFor="let chasse of chassesCreees" (click)="goToHuntDetail(chasse.id)">
+            <h4>{{ chasse.titre }}</h4>
+            <p>{{ chasse.description }}</p>
+            <div><strong>Début :</strong> {{ parseIsoDateTime(chasse.date_debut) }}</div>
+            <div><strong>Fin :</strong> {{ parseIsoDateTime(chasse.date_fin) }}</div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noChasse>
+      <div class="no-chasse">Aucune chasse créée.</div>
+    </ng-template>
+  </section>
+
+  <section class="create-chasse">
+        <h3>Créer une nouvelle chasse</h3>
+            <form (ngSubmit)="creerChasse()" #chasseForm="ngForm" method="post">
+            <input type="text" placeholder="Titre" [(ngModel)]="nouvelleChasse.titre" name="titre" required />
+            <textarea placeholder="Description" [(ngModel)]="nouvelleChasse.description" name="description" required></textarea>
+            <input type="text" placeholder="Lieu" [(ngModel)]="nouvelleChasse.lieu" name="lieu" required />
+            <input type="text" placeholder="Monde" [(ngModel)]="nouvelleChasse.monde" name="monde" required />
+            <input type="number" placeholder="Prix" [(ngModel)]="nouvelleChasse.prix" name="prix" required />
+            <label>
+                <input type="checkbox" [(ngModel)]="nouvelleChasse.est_prive" name="est_prive" />
+                Chasse privée
+            </label>
+            <label>
+                <input type="checkbox" [(ngModel)]="nouvelleChasse.messagerie_est_actif" name="messagerie_est_actif" />
+                Messagerie active
+            </label>
+            <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_debut" name="date_debut" required />
+            <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_fin" name="date_fin" required />
+            <button type="submit" [disabled]="!chasseForm.form.valid">Créer</button>
+        </form>
+  </section>
+</div>
+<div class="user-notfound">
+  <div *ngIf="!utilisateur">
+    <h2>Utilisateur non trouvé</h2>
+    <p>Il semble que l'utilisateur que vous cherchez n'existe pas ou a été supprimé.</p>
+    <p>Veuillez vérifier l'URL ou revenir à la page d'accueil.</p>
+  </div>
+</div>

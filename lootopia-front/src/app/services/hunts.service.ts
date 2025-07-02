@@ -149,15 +149,17 @@ export class HuntsService {
     );
   }
 
-  public create(hunt: any): Observable<any> {
-    return this.http.post<any>(this._HuntsURL, hunt);
+  public getByCreator(pseudo: string): Observable<HuntModel[]> {
+    return this.http.get<HuntModel[]>(`${this._HuntsURL}`).pipe(
+      tap((response) => this.log("Get Hunts By Creator : " + response)),
+      catchError((error) => this.handleError(error, []))
+    );
   }
 
-  public update(id: number, hunt: any): Observable<any> {
-    return this.http.put<any>(`${this._HuntsURL}${id}`, hunt);
-  }
-
-  public delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this._HuntsURL}${id}`);
+  public create(hunt: HuntModel): Observable<HuntModel> {
+    return this.http.post<HuntModel>(this._HuntsURL+"create/", hunt).pipe(
+      tap((response) => this.log("Create Hunt : " + response)),
+      catchError((error) => this.handleError(error, hunt))
+    );
   }
 }
