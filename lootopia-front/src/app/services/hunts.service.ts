@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HuntModel } from '../models/hunt.model';
+import { GetHuntModel, CreateHuntModel } from '../models/hunt.model';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
 
@@ -21,7 +21,7 @@ export class HuntsService {
     return of(errorValue);
   }
 
-  private huntsList : HuntModel[] = [
+  private huntsList : GetHuntModel[] = [
     /*
     {
       id: 1,
@@ -134,29 +134,29 @@ export class HuntsService {
     */
   ]
 
-  public getAll(): Observable<HuntModel[]> {
-    return this.http.get<HuntModel[]>(this._HuntsURL).pipe(
+  public getAll(): Observable<GetHuntModel[]> {
+    return this.http.get<GetHuntModel[]>(this._HuntsURL).pipe(
       tap((response) => this.log("Get All Hunts : " + response)),
       catchError((error) => this.handleError(error, this.huntsList))
     );
   }
 
-  public getById(id: number): Observable<HuntModel | undefined> {
-    return this.http.get<HuntModel>(`${this._HuntsURL}${id}`).pipe(
+  public getById(id: number): Observable<GetHuntModel | undefined> {
+    return this.http.get<GetHuntModel>(`${this._HuntsURL}${id}`).pipe(
       tap((response) => this.log("Get Hunt By Id : " + response)),
       catchError((error) => this.handleError(error, undefined))
     );
   }
 
-  public getByCreator(pseudo: string): Observable<HuntModel[]> {
-    return this.http.get<HuntModel[]>(`${this._HuntsURL}`).pipe(
+  public getByCreator(pseudo: string): Observable<GetHuntModel[]> {
+    return this.http.get<GetHuntModel[]>(`${this._HuntsURL}`).pipe(
       tap((response) => this.log("Get Hunts By Creator : " + response)),
       catchError((error) => this.handleError(error, []))
     );
   }
 
-  public create(hunt: HuntModel): Observable<HuntModel> {
-    return this.http.post<HuntModel>(this._HuntsURL+"create/", hunt).pipe(
+  public create(hunt: CreateHuntModel): Observable<CreateHuntModel> {
+    return this.http.post<CreateHuntModel>(this._HuntsURL+"create/", hunt).pipe(
       tap((response) => this.log("Create Hunt : " + response)),
       catchError((error) => this.handleError(error, hunt))
     );

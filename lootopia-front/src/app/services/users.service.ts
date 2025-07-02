@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { UserModel } from '../models/user.model';
-import { HuntModel } from '../models/hunt.model';
+import { GetHuntModel } from '../models/hunt.model';
 import { HuntsService } from './hunts.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class UsersService {
   private readonly _URL : string = 'https://lootopia-backend.onrender.com/api/user/';
   private readonly _HuntsURL : string = 'https://lootopia-backend.onrender.com/api/chasse/';
   private users : UserModel[] = [];
-  private huntsList : HuntModel[] = [];
+  private huntsList : GetHuntModel[] = [];
 
   constructor(private http: HttpClient, private huntService: HuntsService) { }
 
@@ -40,7 +40,7 @@ export class UsersService {
     );
   }
 
-  public getUserHunts(pseudo: string): Observable<HuntModel[]> {
+  public getUserHunts(pseudo: string): Observable<GetHuntModel[]> {
     /*return this.huntService.getAll().pipe(
       tap((response) => this.log("Get Hunts By Creator : " + response)),
       catchError((error) => this.handleError(error, [])),
@@ -56,7 +56,7 @@ export class UsersService {
     );*/
 
     return this.huntService.getAll().pipe(
-      map((hunts: HuntModel[]) => hunts.filter(hunt => hunt.createur === pseudo)),
+      map((hunts: GetHuntModel[]) => hunts.filter(hunt => hunt.createur === pseudo)),
       tap((response) => this.log("Get Hunts By Creator : " + response)),
       catchError((error) => this.handleError(error, []))
     );

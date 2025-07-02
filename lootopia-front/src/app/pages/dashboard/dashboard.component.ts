@@ -3,7 +3,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HuntsService } from '../../services/hunts.service';
-import { HuntModel } from '../../models/hunt.model';
+import { GetHuntModel } from '../../models/hunt.model';
 import { parseIsoDate, parseIsoDateTime } from '../../utils/common';
 import { Router } from '@angular/router';
 
@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent {
   amount: number = 10.56;
-  public hunts: HuntModel[] | undefined; // Liste des chasses au trésor
+  public hunts: GetHuntModel[] | undefined; // Liste des chasses au trésor
 
   //private readonly huntService = inject(HuntsService);
   

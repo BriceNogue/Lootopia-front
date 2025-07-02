@@ -1,4 +1,4 @@
-export interface HuntModel {
+export interface GetHuntModel {
     // id: number; // ID unique de la chasse au trésor
     // title: string; // Titre de la chasse au trésor
     // description: string; // Description de la chasse au trésor
@@ -21,6 +21,25 @@ export interface HuntModel {
     caches: number[];
     description: string;
     createur: string;
+    titre: string;
+    couleur: string;
+    prix: number;
+    date_debut: string;
+    date_fin: string;
+    nombre_participant: number;
+    lieu: string;
+    monde: string;
+    est_prive: boolean;
+    messagerie_est_actif: boolean;
+    themes: number[];
+}
+
+export interface CreateHuntModel {
+    id: number;
+    participants: number[];
+    caches: number[];
+    description: string;
+    createur: number;
     titre: string;
     couleur: string;
     prix: number;

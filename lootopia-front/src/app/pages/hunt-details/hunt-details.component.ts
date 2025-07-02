@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HuntsService } from '../../services/hunts.service';
-import { HuntModel } from '../../models/hunt.model';
+import { GetHuntModel } from '../../models/hunt.model';
 import { FormsModule } from '@angular/forms';
 import { parseIsoDateTime } from '../../utils/common';
 import { Message } from '../../models/message.model';

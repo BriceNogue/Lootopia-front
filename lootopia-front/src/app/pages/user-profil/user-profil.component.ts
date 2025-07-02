@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserModel } from '../../models/user.model';
-import { HuntModel } from '../../models/hunt.model';
+import { GetHuntModel, CreateHuntModel } from '../../models/hunt.model';
 import { parseIsoDateTime } from '../../utils/common';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { HuntsService } from '../../services/hunts.service';
 })
 export class UserProfilComponent implements OnInit {
   public utilisateur: UserModel | null = null;
-  public chassesCreees: HuntModel[] | undefined;
+  public chassesCreees: GetHuntModel[] | undefined;
   /*= [
     {
       id: 1,
@@ -95,7 +95,7 @@ export class UserProfilComponent implements OnInit {
 
   // Formulaire de création de chasse : Partial<Typeof HuntModel> permet de ne pas remplir tous les champs
   // et de ne pas avoir d'erreur de type
-  nouvelleChasse: Partial<HuntModel> = {
+  nouvelleChasse: Partial<CreateHuntModel> = {
     titre: '',
     description: '',
     lieu: '',
@@ -159,15 +159,15 @@ export class UserProfilComponent implements OnInit {
       this.nouvelleChasse.date_debut &&
       this.nouvelleChasse.date_fin
     ) {
-      const newHunt: HuntModel = {
+      const newHunt: CreateHuntModel = {
         id: 0,
         titre: this.nouvelleChasse.titre,
         description: this.nouvelleChasse.description,
-        createur: this.utilisateur?.pseudo || '',
+        createur: this.utilisateur?.id || 0, // Utiliser l'ID de l'utilisateur connecté
         date_debut: this.nouvelleChasse.date_debut,
         date_fin: this.nouvelleChasse.date_fin,
-        participants: [0],
-        caches: [0],
+        participants: [],
+        caches: [],
         couleur: '000000',
         prix: this.nouvelleChasse.prix || 0,
         nombre_participant: 0,
@@ -179,10 +179,10 @@ export class UserProfilComponent implements OnInit {
       };
       this.huntService.create(newHunt).subscribe({
         next: (createdHunt) => {
-          alert('Chasse créée avec succès !');
+          //alert('Chasse créée avec succès !');
           this.getUserHunts(this.utilisateur?.pseudo || '');
           console.log('Chasse créée avec succès :', createdHunt);
-          //this.goToHuntDetail(createdHunt.id);
+          this.goToHuntDetail(createdHunt.id);
           // Réinitialiser le formulaire après la création
           this.resetForm();
         },
