@@ -38,25 +38,25 @@ export class DashboardComponent {
     this.getHunts(); // Récupération de la liste des chasses au trésor depuis le service
   }
 
-  formatCurrency(value: number): string {
-    return this.currencyPipe.transform(value, 'USD', 'symbol', '1.0-0') || '';
-  }
+    formatCurrency(value: number): string {
+      return this.currencyPipe.transform(value, 'USD', 'symbol', '1.0-0') || '';
+    }
 
-  formatDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  }
+    formatDate(date: Date): string {
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
 
-  formatTime(date: Date): string {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-  }
+    formatTime(date: Date): string {
+      return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    }
 
   formatDateTime(date: Date): string {
     return `${this.formatDate(date)} ${this.formatTime(date)}`;

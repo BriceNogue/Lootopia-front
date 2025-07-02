@@ -1,0 +1,92 @@
+.admin-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.admin-section {
+  flex: 1 1 45%;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  min-width: 300px;
+}
+
+@media (max-width: 900px) {
+  .admin-container {
+    flex-direction: column;
+  }
+  .admin-section {
+    min-width: unset;
+  }
+}
+
+.hunts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.hunts-table th, .hunts-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+.hunts-table th {
+  background: #ececec;
+}
+.btn-create, .btn-edit, .btn-delete {
+  margin: 0 0.2rem;
+  padding: 0.3rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-create {
+  background: #49A078;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.btn-edit {
+  background: #ffc107;
+  color: #333;
+}
+.btn-delete {
+  background: #df0000;
+  color: #fff;
+}
+
+.hunt-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+.hunt-form input[type="text"],
+.hunt-form input[type="number"],
+.hunt-form input[type="date"] {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 120px;
+}
+.hunt-form label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.hunt-form .btn-create {
+  margin-left: 1rem;
+}
+.hunt-form button[type="button"] {
+  background: #ececec;
+  color: #333;
+  border: 1px solid #ccc;
+  margin-left: 0.5rem;
+}
+.error {
+  color: #df0000;
+  margin-bottom: 1rem;
+}

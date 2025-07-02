@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GetHuntModel, CreateHuntModel } from '../models/hunt.model';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
