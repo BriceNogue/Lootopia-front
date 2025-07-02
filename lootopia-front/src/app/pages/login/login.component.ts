@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.setItem("user", JSON.stringify({ id: 24, pseudo: 'NathanSDV', email: 'nathan2025@gmail.com'}));
     // Surveillance des changements du formulaire pour réinitialiser les messages d'erreur
     this.loginForm.valueChanges.subscribe(() => {
       this.errorMessage = '';

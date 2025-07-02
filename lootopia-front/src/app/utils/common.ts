@@ -1,3 +1,5 @@
+import { UserModel } from "../models/user.model";
+
 export function parseIsoDate(isoString: string): Date {
   return new Date(isoString);
 }
@@ -11,4 +13,13 @@ export function parseIsoDateTime(isoString: string, forTime: string = ''): strin
   const hours = String(date.getHours()).padStart(2, '0');
   const minutes = String(date.getMinutes()).padStart(2, '0');
   return `${day}-${month}-${year} ${forTime} ${hours}:${minutes}`;
+}
+
+export function getCurentUser(): UserModel | null {
+  // Récupère l'utilisateur actuel depuis le localStorage
+  const user = localStorage.getItem('user');
+  if (user) {
+    return JSON.parse(user) as UserModel;
+  }
+  return null;
 }
