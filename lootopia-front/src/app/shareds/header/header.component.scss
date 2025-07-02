@@ -17,13 +17,13 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+   
     .header-logo {
         width: fit-content;
         display: flex;
         align-items: center;
         color: $text-color;
-    
+   
         img {
             width: 40px;
             height: auto;
@@ -73,16 +73,16 @@ header {
     .header-nav {
         display: inline-flex;
         gap: 15px;
-    
+   
         a {
             text-decoration: none;
             color: $text-color;
             font-size: 13px;
-    
+   
             &:hover {
                 color: $link-hover-color;
             }
-
+ 
             &.active {
                 font-weight: bold;
                 color: $link-active-color;

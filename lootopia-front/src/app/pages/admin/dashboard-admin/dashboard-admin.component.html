@@ -1,0 +1,56 @@
+<div class="admin-container">
+  <section class="admin-section">
+    <h2>Gestion des Chasses</h2>
+    <!-- Formulaire inline pour créer/éditer une chasse -->
+    <form [formGroup]="huntForm" (ngSubmit)="onSubmit()" class="hunt-form">
+      <input formControlName="title" placeholder="Titre" required />
+      <input formControlName="location" placeholder="Lieu" required />
+      <input formControlName="startDate" type="date" placeholder="Date début" required />
+      <input formControlName="endDate" type="date" placeholder="Date fin" required />
+      <input formControlName="price" type="number" placeholder="Prix" required />
+      <input formControlName="reward" type="number" placeholder="Récompense" required />
+      <input formControlName="maxParticipants" type="number" placeholder="Max participants" required />
+      <input formControlName="difficulty" placeholder="Difficulté" />
+      <input formControlName="description" placeholder="Description" />
+      <label>
+        <input formControlName="isPrivate" type="checkbox" /> Privée
+      </label>
+      <button type="submit" class="btn-create">{{ isEditing ? 'Modifier' : 'Créer' }}</button>
+      <button *ngIf="isEditing" type="button" (click)="cancelEdit()">Annuler</button>
+    </form>
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="loading">Chargement...</div>
+    <table class="hunts-table" *ngIf="!loading">
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Lieu</th>
+          <th>Date début</th>
+          <th>Date fin</th>
+          <th>Prix</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hunt of hunts">
+          <td>{{ hunt.title }}</td>
+          <td>{{ hunt.location }}</td>
+          <td>{{ hunt.startDate | date:'shortDate' }}</td>
+          <td>{{ hunt.endDate | date:'shortDate' }}</td>
+          <td>{{ hunt.price | currency:'EUR' }}</td>
+          <td>
+            <button class="btn-edit" (click)="editHunt(hunt)">Modifier</button>
+            <button class="btn-delete" (click)="deleteHunt(hunt.id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section class="admin-section">
+    <h2>Gestion des Utilisateurs</h2>
+    <!-- Section CRUD Utilisateurs -->
+    <div id="crud-users">
+      <!-- Contenu à venir -->
+    </div>
+  </section>
+</div>

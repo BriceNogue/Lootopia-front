@@ -2,25 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('300ms ease-out', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule]
 })
 export class LoginComponent implements OnInit {
   // Formulaire de connexion
@@ -31,10 +21,12 @@ export class LoginComponent implements OnInit {
   errorMessage: string = '';
   // État de succès
   showSuccess: boolean = false;
+  welcomeMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     // Initialisation du formulaire avec les validateurs
     this.loginForm = this.fb.group({
@@ -65,6 +57,7 @@ export class LoginComponent implements OnInit {
 
   // Gestion de la soumission du formulaire
   async onSubmit() {
+    console.log('Formulaire soumis', this.loginForm.value);
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
@@ -118,12 +111,38 @@ export class LoginComponent implements OnInit {
 
   // Simulation de la connexion
   private async loginUser(credentials: any): Promise<void> {
-    return new Promise((resolve) => {
+    try {
+      const response: any = await this.http.post('https://lootopia-backend.onrender.com/api/user/login', {
+        mail: credentials.email,
+        password: credentials.password
+      }).toPromise();
+      console.log('Réponse API login:', response);
+      // Stockage des tokens si présents dans la réponse
+      if (response && response.access_token) {
+        localStorage.setItem('access_token', response.access_token);
+        console.log('Access token stocké dans le localStorage');
+      }
+      if (response && response.refresh_token) {
+        localStorage.setItem('refresh_token', response.refresh_token);
+        console.log('Refresh token stocké dans le localStorage');
+      }
+      if (response && response.access_token) {
+        // Décodage du token si besoin
+        const decoded: any = jwtDecode(response.access_token);
+        this.welcomeMessage = `Bienvenue ${decoded.username || decoded.pseudo || ''} !`;
+      } else if (response && response.username) {
+        this.welcomeMessage = `Bienvenue ${response.username} !`;
+      }
+      this.showSuccess = true;
       setTimeout(() => {
-        console.log('Connexion réussie:', credentials);
-        resolve();
-      }, 1000);
-    });
+        this.welcomeMessage = '';
+        this.router.navigate(['/landing']);
+      }, 2000);
+    } catch (error: any) {
+      console.error('Erreur lors de la connexion:', error);
+      this.errorMessage = error?.error?.message || 'Une erreur est survenue lors de la connexion';
+      throw error;
+    }
   }
 
   // Navigation vers la page d'inscription

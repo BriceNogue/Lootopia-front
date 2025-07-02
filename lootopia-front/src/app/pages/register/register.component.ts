@@ -2,25 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms ease-in', style({ opacity: 1 }))
-      ]),
-      transition(':leave', [
-        animate('300ms ease-out', style({ opacity: 0 }))
-      ])
-    ])
-  ]
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule]
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
@@ -37,7 +26,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -132,12 +122,18 @@ export class RegisterComponent implements OnInit {
   }
 
   private async registerUser(userData: any): Promise<void> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log('Données d\'inscription:', userData);
-        resolve();
-      }, 1000);
-    });
+    try {
+      const res = await this.http.post('https://lootopia-backend.onrender.com/api/user/register', {
+        pseudo: userData.username,
+        mail: userData.email,
+        password: userData.password,
+        role_id: 1
+      }).toPromise();
+      console.log('Réponse API register:', res);
+    } catch (error) {
+      console.error('Erreur API register:', error);
+      throw error;
+    }
   }
 
   goToLogin() {
