@@ -1,1 +1,40 @@
-<p>landing works!</p>
+<div class="landing-container">
+  <header class="landing-header">
+    <div class="logo">Lootopia</div>
+    <button class="login-btn" (click)="onLoginClick()">Se connecter <span>🔒</span></button>
+  </header>
+
+  <main>
+    <h1 class="main-title">Bienvenue sur Lootopia</h1>
+    <section class="intro-section">
+      <div class="intro-card">
+        <h2>Lootopia, c'est quoi</h2>
+        <p>
+          Une plateforme de chasse au trésor ludique et immersive<br />
+          grâce à notre technologie de Réalité Augmentée ...
+        </p>
+      </div>
+      <div class="download-section">
+        <div class="app-screen-placeholder">Screen de l'appli mobile</div>
+        <div class="download-label">TÉLÉCHARGER</div>
+        <div class="qr-code-placeholder">QR CODE</div>
+      </div>
+    </section>
+
+    <section class="map-section">
+      <h2 class="section-title">Localise le trésor</h2>
+      <div class="map-placeholder">
+        <!-- Remplacer par une vraie carte Google Maps -->
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center=New+York&zoom=12&size=400x200&key=YOUR_API_KEY" alt="Carte" />
+      </div>
+    </section>
+
+    <section class="collection-section">
+      <div class="trophy-section">
+        <img src="https://cdn.pixabay.com/photo/2012/04/13/00/22/trophy-31238_1280.png" alt="Trophées" class="trophy-img" />
+        <div class="trophy-caption">J'ai généré ça à l'arrache tqt.</div>
+      </div>
+      <h2 class="section-title">Agrandis ta collection</h2>
+    </section>
+  </main>
+</div>

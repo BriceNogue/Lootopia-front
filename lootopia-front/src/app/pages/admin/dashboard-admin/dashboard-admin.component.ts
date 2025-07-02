@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angul
 import { HttpClientModule } from '@angular/common/http';
 import { HuntsService } from '../../../services/hunts.service';
 import { HuntModel } from '../../../models/hunt.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -25,16 +26,15 @@ export class DashboardAdminComponent {
 
   constructor() {
     this.huntForm = this.fb.group({
-      title: [''],
-      location: [''],
-      startDate: [''],
-      endDate: [''],
-      price: [''],
+      titre: [''],
+      lieu: [''],
+      date_debut: [''],
+      date_fin: [''],
+      prix: [''],
       description: [''],
-      difficulty: [''],
-      reward: [''],
-      isPrivate: [false],
-      maxParticipants: ['']
+      couleur: [''],
+      nombre_participant: [''],
+      est_prive: [false],
     });
   }
 
@@ -71,7 +71,7 @@ export class DashboardAdminComponent {
           this.fetchHunts();
           this.cancelEdit();
         },
-        error: (err) => {
+        error: (err: any) => {
           this.error = 'Erreur lors de la modification';
           console.error('[Admin] Erreur modification:', err);
         }
@@ -84,7 +84,7 @@ export class DashboardAdminComponent {
           this.fetchHunts();
           this.huntForm.reset();
         },
-        error: (err) => {
+        error: (err: any) => {
           this.error = 'Erreur lors de la création';
           console.error('[Admin] Erreur création:', err);
         }
@@ -96,16 +96,15 @@ export class DashboardAdminComponent {
     this.isEditing = true;
     this.editingHuntId = hunt.id;
     this.huntForm.patchValue({
-      title: hunt.title,
-      location: hunt.location,
-      startDate: hunt.startDate ? new Date(hunt.startDate).toISOString().substring(0, 10) : '',
-      endDate: hunt.endDate ? new Date(hunt.endDate).toISOString().substring(0, 10) : '',
-      price: hunt.price,
+      titre: hunt.titre,
+      lieu: hunt.lieu,
+      date_debut: hunt.date_debut ? new Date(hunt.date_debut).toISOString().substring(0, 10) : '',
+      date_fin: hunt.date_fin ? new Date(hunt.date_fin).toISOString().substring(0, 10) : '',
+      prix: hunt.prix,
       description: hunt.description,
-      difficulty: hunt.difficulty,
-      reward: hunt.reward,
-      isPrivate: hunt.isPrivate,
-      maxParticipants: hunt.maxParticipants
+      couleur: hunt.couleur,
+      nombre_participant: hunt.nombre_participant,
+      est_prive: hunt.est_prive,
     });
     console.log('[Admin] Edition mode activé pour la chasse', hunt.id);
   }
@@ -125,7 +124,7 @@ export class DashboardAdminComponent {
         console.log('[Admin] Chasse supprimée');
         this.fetchHunts();
       },
-      error: (err) => {
+      error: (err: any) => {
         this.error = 'Erreur lors de la suppression';
         console.error('[Admin] Erreur suppression:', err);
       }

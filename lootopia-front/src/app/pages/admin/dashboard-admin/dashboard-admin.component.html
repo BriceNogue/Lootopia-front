@@ -33,11 +33,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let hunt of hunts">
-          <td>{{ hunt.title }}</td>
-          <td>{{ hunt.location }}</td>
-          <td>{{ hunt.startDate | date:'shortDate' }}</td>
-          <td>{{ hunt.endDate | date:'shortDate' }}</td>
-          <td>{{ hunt.price | currency:'EUR' }}</td>
+          <td>{{ hunt.titre }}</td>
+          <td>{{ hunt.lieu }}</td>
+          <td>{{ hunt.date_debut | date:'shortDate' }}</td>
+          <td>{{ hunt.date_fin | date:'shortDate' }}</td>
+          <td>{{ hunt.prix | currency:'EUR' }}</td>
           <td>
             <button class="btn-edit" (click)="editHunt(hunt)">Modifier</button>
             <button class="btn-delete" (click)="deleteHunt(hunt.id)">Supprimer</button>

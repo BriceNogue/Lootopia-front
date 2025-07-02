@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { HuntModel } from '../models/hunt.model';
-import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -148,5 +147,17 @@ export class HuntsService {
       tap((response) => this.log("Get Hunt By Id : " + response)),
       catchError((error) => this.handleError(error, undefined))
     );
+  }
+
+  public create(hunt: any): Observable<any> {
+    return this.http.post<any>(this._HuntsURL, hunt);
+  }
+
+  public update(id: number, hunt: any): Observable<any> {
+    return this.http.put<any>(`${this._HuntsURL}${id}`, hunt);
+  }
+
+  public delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this._HuntsURL}${id}`);
   }
 }
