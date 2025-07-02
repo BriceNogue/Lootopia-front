@@ -1,1 +1,159 @@
+<<<<<<< Updated upstream
 <p>landing works!</p>
+=======
+<div class="landing-container">
+  <!-- Bandeau d'annonce -->
+  <div class="alert-banner" role="status" aria-label="Annonce importante">
+    <span class="alert-icon" aria-hidden="true">🎉</span>
+    <span class="alert-text">Nouveau ! Gagnez des récompenses exclusives cet été à Nantes.</span>
+  </div>
+
+  <header class="landing-header">
+    <div class="logo">Lootopia</div>
+    <button class="login-btn" (click)="onLoginClick()">Se connecter <span>🔒</span></button>
+  </header>
+
+  <main>
+    <h1 class="main-title">Bienvenue sur Lootopia</h1>
+    <section class="intro-section">
+      <div class="intro-card">
+        <h2>Une nouvelle façon de jouer</h2>
+        <p>
+          Découvrez des chasses au trésor immersives, gagnez des récompenses et rejoignez une communauté de passionnés.<br />
+          Simple, ludique, sécurisé.
+        </p>
+      </div>
+      <div class="download-section">
+        <div class="app-screen-placeholder">Screen de l'appli mobile</div>
+        <div class="download-label">TÉLÉCHARGER</div>
+        <div class="qr-code-placeholder">QR CODE</div>
+      </div>
+    </section>
+
+    <section class="cta-section" aria-label="Call to action principal">
+      <button class="cta-btn" (click)="onLoginClick()" aria-label="Commencer l'aventure sur Lootopia">Commencer l'aventure</button>
+      <div class="cta-caption">Inscris-toi ou connecte-toi pour découvrir toutes les chasses !</div>
+    </section>
+
+    <section class="hunts-section">
+      <h2 class="section-title">Chasses au trésor autour de Nantes</h2>
+      <div *ngIf="isLoadingHunts" class="hunts-loading">Chargement des chasses...</div>
+      <div *ngIf="huntsError" class="hunts-error">{{ huntsError }}</div>
+      <div *ngIf="!isLoadingHunts && !huntsError && nantesHunts.length === 0" class="hunts-empty">
+        Aucune chasse au trésor trouvée à Nantes pour le moment.
+      </div>
+      <div class="hunts-list" *ngIf="nantesHunts.length > 0">
+        <div class="hunt-card" *ngFor="let hunt of nantesHunts">
+          <div class="hunt-card-header" [style.background]="hunt.couleur || '#ffe082'">
+            <span class="hunt-title">{{ hunt.titre }}</span>
+            <span class="hunt-private" *ngIf="hunt.est_prive" title="Chasse privée">🔒</span>
+          </div>
+          <div class="hunt-card-body">
+            <div class="hunt-description">{{ hunt.description }}</div>
+            <div class="hunt-infos">
+              <span class="hunt-date">📅 {{ hunt.date_debut | date:'dd/MM/yyyy' }} - {{ hunt.date_fin | date:'dd/MM/yyyy' }}</span>
+              <span class="hunt-participants">👥 {{ hunt.nombre_participant }} participants</span>
+              <span class="hunt-prix">💰 {{ hunt.prix }} Couronnes</span>
+            </div>
+            <div class="hunt-organizer">Organisateur : <b>{{ hunt.createur }}</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="why-section">
+      <h2 class="section-title">Pourquoi choisir Lootopia ?</h2>
+      <div class="why-list">
+        <div class="why-card">
+          <span class="why-icon">🎯</span>
+          <h3>Chasses immersives</h3>
+          <p>Des aventures uniques, scénarisées et adaptées à tous les âges, en solo ou entre amis.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🔒</span>
+          <h3>Sécurité & confidentialité</h3>
+          <p>Vos données sont protégées et vos parties sont sécurisées, pour jouer l'esprit tranquille.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon">🏆</span>
+          <h3>Récompenses & communauté</h3>
+          <p>Gagnez des Couronnes, grimpez dans le classement et échangez avec une communauté passionnée.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-section" aria-label="Comment ça marche ?">
+      <h2 class="section-title">Comment ça marche ?</h2>
+      <div class="how-list">
+        <div class="how-step">
+          <span class="how-icon">📝</span>
+          <h3>1. Inscris-toi</h3>
+          <p>Crée ton compte en quelques secondes, c'est gratuit et sécurisé.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-icon">🗺️</span>
+          <h3>2. Choisis une chasse</h3>
+          <p>Parcours la liste des chasses autour de toi et trouve celle qui t'inspire.</p>
+        </div>
+        <div class="how-step">
+          <span class="how-icon">🎉</span>
+          <h3>3. Joue & gagne</h3>
+          <p>Résous les énigmes, découvre des caches et remporte des récompenses !</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="testimonials-section" aria-label="Témoignages utilisateurs">
+      <h2 class="section-title">Ils ont adoré Lootopia</h2>
+      <div class="testimonials-list">
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Alice" class="testimonial-avatar" />
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">“Lootopia m'a permis de redécouvrir ma ville en famille !”</div>
+          <div class="testimonial-author">Alice, 29 ans</div>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Lucas" class="testimonial-avatar" />
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">“Des chasses variées, une appli intuitive, je recommande à 100%.”</div>
+          <div class="testimonial-author">Lucas, 35 ans</div>
+        </div>
+        <div class="testimonial-card">
+          <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sophie" class="testimonial-avatar" />
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">“J'ai adoré l'ambiance et les récompenses à gagner !”</div>
+          <div class="testimonial-author">Sophie, 22 ans</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section FAQ -->
+    <section class="faq-section" aria-label="Questions fréquentes" tabindex="0">
+      <h2 class="section-title">Questions fréquentes</h2>
+      <div class="faq-list">
+        <div class="faq-item" [class.open]="faqOpen[0]">
+          <button class="faq-question" (click)="toggleFaq(0)" [attr.aria-expanded]="faqOpen[0]" aria-controls="faq1" id="faq1-label">Lootopia est-il gratuit ?</button>
+          <div class="faq-answer" id="faq1" role="region" aria-labelledby="faq1-label" *ngIf="faqOpen[0]">Oui, l'inscription et la plupart des chasses sont gratuites. Certaines chasses spéciales peuvent être payantes, mais la majorité du contenu est accessible à tous.</div>
+        </div>
+        <div class="faq-item" [class.open]="faqOpen[1]">
+          <button class="faq-question" (click)="toggleFaq(1)" [attr.aria-expanded]="faqOpen[1]" aria-controls="faq2" id="faq2-label">Comment participer à une chasse ?</button>
+          <div class="faq-answer" id="faq2" role="region" aria-labelledby="faq2-label" *ngIf="faqOpen[1]">Il suffit de créer un compte, de choisir une chasse dans la liste et de suivre les instructions pour commencer l'aventure !</div>
+        </div>
+        <div class="faq-item" [class.open]="faqOpen[2]">
+          <button class="faq-question" (click)="toggleFaq(2)" [attr.aria-expanded]="faqOpen[2]" aria-controls="faq3" id="faq3-label">Puis-je jouer en équipe ?</button>
+          <div class="faq-answer" id="faq3" role="region" aria-labelledby="faq3-label" *ngIf="faqOpen[2]">Oui, tu peux inviter des amis ou des membres de ta famille pour résoudre les énigmes ensemble et partager la victoire !</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer">
+    <div class="footer-content">
+      <span>© 2024 Lootopia. Tous droits réservés.</span>
+      <span class="footer-links">
+        <a href="#">Mentions légales</a> · <a href="#">Contact</a> · <a href="#">Instagram</a>
+      </span>
+    </div>
+  </footer>
+</div>
+>>>>>>> Stashed changes

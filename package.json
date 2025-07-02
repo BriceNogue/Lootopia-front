@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@angular/google-maps": "^20.0.5",
+    "@bluehalo/ngx-leaflet": "^20.0.0",
+    "@types/leaflet": "^1.9.19",
+    "leaflet": "^1.9.4"
+  }
+}

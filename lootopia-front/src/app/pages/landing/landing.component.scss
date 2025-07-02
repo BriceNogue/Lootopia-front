@@ -1,0 +1,595 @@
+<<<<<<< Updated upstream
+=======
+.landing-container {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fff;
+  min-height: 100vh;
+  color: #222;
+}
+
+.landing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px 12px 48px;
+  background: #f7c948;
+  border-bottom: 2px solid #e1b12c;
+}
+.logo {
+  font-size: 2.2rem;
+  font-family: 'Dancing Script', cursive, serif;
+  color: #222;
+}
+.login-btn {
+  background: #fff;
+  color: #222;
+  border: 1px solid #e1b12c;
+  border-radius: 20px;
+  padding: 8px 24px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-btn:hover {
+  background: #ffe082;
+}
+
+.main-title {
+  text-align: center;
+  font-family: 'Dancing Script', cursive, serif;
+  font-size: 3rem;
+  margin: 32px 0 24px 0;
+}
+
+.intro-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 0 0 40px 0;
+  flex-wrap: wrap;
+}
+.intro-card {
+  background: #ffe082;
+  border-radius: 16px;
+  padding: 28px 32px;
+  max-width: 340px;
+  box-shadow: 0 2px 8px #0001;
+  font-size: 1.1rem;
+}
+.intro-card h2 {
+  font-family: 'Dancing Script', cursive, serif;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+.download-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 32px;
+}
+.app-screen-placeholder {
+  width: 180px;
+  height: 140px;
+  background: #e0e0e0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+.download-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 1.3rem;
+  font-family: 'Dancing Script', cursive, serif;
+  margin: 8px 0;
+  letter-spacing: 2px;
+}
+.qr-code-placeholder {
+  width: 70px;
+  height: 70px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.map-section {
+  margin: 40px auto 0 auto;
+  max-width: 600px;
+  text-align: center;
+}
+.section-title {
+  font-family: 'Dancing Script', cursive, serif;
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+/* Style spécifique pour la carte Google Maps sur la landing page */
+.map-section google-map {
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px #0002;
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: 500px;
+}
+.map-help {
+  text-align: center;
+}
+
+.collection-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  margin: 48px 0 0 0;
+  flex-wrap: wrap;
+}
+.trophy-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.trophy-img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 8px;
+}
+.trophy-caption {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .intro-section, .collection-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  .download-section {
+    margin-left: 0;
+    margin-top: 24px;
+  }
+}
+
+/* Section dynamique des chasses au trésor autour de Nantes */
+.hunts-section {
+  margin: 48px auto 0 auto;
+  max-width: 900px;
+  text-align: center;
+  padding: 0 16px;
+}
+.hunts-loading, .hunts-error, .hunts-empty {
+  color: #b48a00;
+  font-size: 1.1rem;
+  margin: 16px 0;
+}
+.hunts-error {
+  color: #d32f2f;
+}
+.hunts-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 24px;
+}
+.hunt-card {
+  background: #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px #0002;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s, box-shadow 0.18s;
+  border: 2px solid #ffe082;
+  overflow: hidden;
+  position: relative;
+  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+}
+.hunt-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px #0003;
+  border-color: #f7c948;
+}
+.hunt-card-header {
+  padding: 16px 20px 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Dancing Script', cursive, serif;
+  font-size: 1.4rem;
+  background: #ffe082;
+  color: #222;
+}
+.hunt-title {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.hunt-private {
+  font-size: 1.2rem;
+  color: #d32f2f;
+  margin-left: 8px;
+}
+.hunt-card-body {
+  padding: 16px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hunt-description {
+  font-size: 1.05rem;
+  color: #444;
+  margin-bottom: 8px;
+  min-height: 48px;
+}
+.hunt-infos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  font-size: 0.98rem;
+  color: #666;
+}
+.hunt-organizer {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #888;
+}
+@media (max-width: 900px) {
+  .hunts-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .hunt-card {
+    width: 98%;
+    min-width: 0;
+  }
+}
+
+/* Animation d'apparition fade-in et slide-up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+section, .alert-banner, .faq-section {
+  animation: fadeInUp 0.8s cubic-bezier(.23,1.01,.32,1) both;
+}
+
+/* Bandeau d'alerte/annonce */
+.alert-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #ffe082 0%, #f7c948 100%);
+  color: #222;
+  font-weight: 600;
+  font-size: 1.08rem;
+  padding: 12px 0;
+  border-bottom: 2px solid #e1b12c;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 8px #0001;
+}
+.alert-icon {
+  font-size: 1.3rem;
+  margin-right: 8px;
+}
+
+/* FAQ Section */
+.faq-section {
+  margin: 56px auto 0 auto;
+  max-width: 900px;
+  text-align: center;
+  padding: 0 16px 32px 16px;
+}
+.faq-list {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+.faq-item {
+  width: 100%;
+  max-width: 600px;
+  background: #fffbe6;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #0001;
+  border: 2px solid #ffe082;
+  margin-bottom: 0;
+  overflow: hidden;
+  transition: box-shadow 0.18s;
+}
+.faq-item:focus-within, .faq-item:hover {
+  box-shadow: 0 4px 16px #f7c94844;
+}
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #b48a00;
+  padding: 18px 24px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  border-bottom: 1px solid #ffe082;
+}
+.faq-question:focus, .faq-question:hover {
+  background: #ffe08244;
+  color: #222;
+}
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  background: #fffbe6;
+  color: #444;
+  font-size: 1.01rem;
+  padding: 0 24px;
+  transition: max-height 0.35s cubic-bezier(.23,1.01,.32,1), padding 0.18s;
+}
+.faq-item.open .faq-answer {
+  max-height: 200px;
+  padding: 16px 24px 18px 24px;
+}
+
+/* Accessibilité : focus visible sur tous les boutons */
+button:focus-visible, .cta-btn:focus-visible, .faq-question:focus-visible {
+  outline: 3px solid #b48a00;
+  outline-offset: 2px;
+  z-index: 2;
+}
+
+/* Contraste amélioré pour les boutons principaux */
+.cta-btn {
+  color: #222;
+  background: linear-gradient(90deg, #f7c948 0%, #ffe082 100%);
+}
+.cta-btn:focus, .cta-btn:hover {
+  color: #b48a00;
+}
+
+/* Section avantages "Pourquoi Lootopia ?" */
+.why-section {
+  margin: 56px auto 0 auto;
+  max-width: 900px;
+  text-align: center;
+  padding: 0 16px;
+}
+.why-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 32px;
+}
+.why-card {
+  background: #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px #0001;
+  width: 270px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 24px 20px;
+  transition: transform 0.18s, box-shadow 0.18s;
+  border: 2px solid #ffe082;
+  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+}
+.why-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px #0002;
+  border-color: #f7c948;
+}
+.why-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.why-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  color: #222;
+}
+.why-card p {
+  font-size: 1.05rem;
+  color: #555;
+}
+@media (max-width: 900px) {
+  .why-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .why-card {
+    width: 98%;
+    min-width: 0;
+  }
+}
+
+/* Call-to-action central */
+.cta-section {
+  text-align: center;
+  margin: 48px 0 32px 0;
+}
+.cta-btn {
+  background: linear-gradient(90deg, #f7c948 0%, #ffe082 100%);
+  color: #222;
+  border: none;
+  border-radius: 32px;
+  padding: 16px 48px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #0001;
+  transition: background 0.18s, transform 0.18s;
+}
+.cta-btn:hover {
+  background: linear-gradient(90deg, #ffe082 0%, #f7c948 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+.cta-caption {
+  margin-top: 12px;
+  color: #b48a00;
+  font-size: 1.05rem;
+}
+
+/* Section "Comment ça marche ?" */
+.how-section {
+  margin: 56px auto 0 auto;
+  max-width: 900px;
+  text-align: center;
+  padding: 0 16px;
+}
+.how-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 32px;
+}
+.how-step {
+  background: #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px #0001;
+  width: 250px;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 24px 20px;
+  border: 2px solid #ffe082;
+  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+}
+.how-icon {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+.how-step h3 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+  color: #222;
+}
+.how-step p {
+  font-size: 1.01rem;
+  color: #555;
+}
+@media (max-width: 900px) {
+  .how-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .how-step {
+    width: 98%;
+    min-width: 0;
+  }
+}
+
+/* Section témoignages */
+.testimonials-section {
+  margin: 56px auto 0 auto;
+  max-width: 900px;
+  text-align: center;
+  padding: 0 16px;
+}
+.testimonials-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 32px;
+}
+.testimonial-card {
+  background: #fffbe6;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px #0001;
+  width: 270px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 24px 20px;
+  border: 2px solid #ffe082;
+  animation: fadeInUp 0.7s cubic-bezier(.23,1.01,.32,1) both;
+}
+.testimonial-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #f7c948;
+}
+.testimonial-stars {
+  color: #f7c948;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.testimonial-text {
+  font-size: 1.05rem;
+  color: #444;
+  margin-bottom: 8px;
+  min-height: 48px;
+}
+.testimonial-author {
+  font-size: 0.98rem;
+  color: #888;
+}
+@media (max-width: 900px) {
+  .testimonials-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .testimonial-card {
+    width: 98%;
+    min-width: 0;
+  }
+}
+
+/* Footer épuré */
+.landing-footer {
+  background: #f7c948;
+  color: #222;
+  padding: 24px 0 16px 0;
+  margin-top: 56px;
+  border-top: 2px solid #e1b12c;
+  font-size: 1.05rem;
+}
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.footer-links a {
+  color: #222;
+  text-decoration: underline;
+  margin: 0 6px;
+  font-size: 1.01rem;
+  transition: color 0.18s;
+}
+.footer-links a:hover {
+  color: #b48a00;
+}
+>>>>>>> Stashed changes
