@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HuntsService } from '../../services/hunts.service';
+import { UsersService } from '../../services/users.service';
 import { GetHuntModel } from '../../models/hunt.model';
 import { FormsModule } from '@angular/forms';
 import { parseIsoDateTime } from '../../utils/common';
@@ -21,12 +22,14 @@ export class HuntDetailsComponent {
   messages: Message[] = [];
   newMessage = '';
   public curentUserId: number | null = null;
+  public curentUser: UserModel | null = null;
   private huntId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private huntsService: HuntsService
+    private huntsService: HuntsService,
+    private userService: UsersService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,16 @@ export class HuntDetailsComponent {
     const userId = getCurentUserId();
     if (userId) {
       this.curentUserId = userId;
+      this.userService.getById(userId).subscribe({
+        next: (user) => {
+          this.curentUser = user;
+          console.log('Utilisateur connecté:', this.curentUser);
+        },
+        error: (err) => {
+          console.error('Erreur lors de la récupération de l\'utilisateur :', err);
+          this.curentUser = null;
+        }
+      });
     } else {
       //alert('Vous devez être connecté pour accéder à cette page.');
       //console.error('Aucun utilisateur connecté trouvé. Redirection vers la page de connexion.');
@@ -98,6 +111,35 @@ export class HuntDetailsComponent {
       },
       error: (error) => {
         console.error('Erreur lors de l\'inscription à la chasse :', error);
+      }
+    });
+  }
+
+  editHunt() {
+    if (!this.huntId) {
+      console.error('Aucun ID de chasse trouvé pour l\'édition.');
+      return;
+    }
+    this.goBack();
+  }
+
+  deleteHunt() {
+    if (!this.huntId) {
+      console.error('Aucun ID de chasse trouvé pour la suppression.');
+      return;
+    }
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cette chasse ?')) {
+      return;
+    }
+
+    this.huntsService.delete(this.huntId).subscribe({
+      next: () => {
+        console.log('Chasse supprimée avec succès !');
+        alert('Chasse supprimée avec succès !');
+        this.goBack();
+      },
+      error: (error) => {
+        console.error('Erreur lors de la suppression de la chasse :', error);
       }
     });
   }

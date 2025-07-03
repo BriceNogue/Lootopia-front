@@ -1,9 +1,17 @@
 <div class="hunt-details-wrapper" *ngIf="!loading && hunt; else loadingTpl">
   <!-- SECTION DETAILS -->
   <section class="hunt-section details-section">
-    <button class="back-btn" (click)="goBack()">
+    <div class="hunt-actions">
+      <button class="hunt-action-btn back-btn" (click)="goBack()">
       ← Retour
-    </button>
+      </button>
+      <button class="hunt-action-btn edit-btn" *ngIf="hunt.createur == curentUser?.pseudo" (click)="editHunt()">
+        Modifier
+      </button>
+      <button class="hunt-action-btn delete-btn" *ngIf="hunt.createur == curentUser?.pseudo" (click)="deleteHunt()">
+        Supprimer
+      </button>
+    </div>
     <h2 class="hunt-title">{{ hunt.titre }}</h2>
     <div class="hunt-meta">
       <span><strong>Créateur :</strong> {{ hunt.createur }}</span>

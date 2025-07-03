@@ -13,7 +13,7 @@
 
   <section class="user-chasses">
     <h3>Chasses créées</h3>
-    {{ utilisateur.pseudo }} a créé {{ chassesCreees?.length || 0 }} chasse(s).
+    {{ chassesCreees?.length || 0 }}
     <div *ngIf="chassesCreees && chassesCreees.length; else noChasse">
       <div class="chasse-list">
         <div class="chasse-card" *ngFor="let chasse of chassesCreees" (click)="goToHuntDetail(chasse.id)">
@@ -34,9 +34,10 @@
             <form (ngSubmit)="creerChasse()" #chasseForm="ngForm" method="post">
             <input type="text" placeholder="Titre" [(ngModel)]="nouvelleChasse.titre" name="titre" required />
             <textarea placeholder="Description" [(ngModel)]="nouvelleChasse.description" name="description" required></textarea>
+            <input type="number" placeholder="Nombre de participants max" [(ngModel)]="nouvelleChasse.nombre_participant" name="nombre_participant" required min="1" />
             <input type="text" placeholder="Lieu" [(ngModel)]="nouvelleChasse.lieu" name="lieu" required />
             <input type="text" placeholder="Monde" [(ngModel)]="nouvelleChasse.monde" name="monde" required />
-            <input type="number" placeholder="Prix" [(ngModel)]="nouvelleChasse.prix" name="prix" required />
+            <input type="number" placeholder="Prix" [(ngModel)]="nouvelleChasse.prix" name="prix" required min="0"/>
             <label>
                 <input type="checkbox" [(ngModel)]="nouvelleChasse.est_prive" name="est_prive" />
                 Chasse privée

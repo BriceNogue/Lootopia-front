@@ -49,7 +49,7 @@
   margin-bottom: 0.3rem;
 }
 
-.register-btn, .back-btn {
+.register-btn, .hunt-action-btn {
   padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 8px;
@@ -69,6 +69,24 @@
   background: linear-gradient(90deg, #333533 60%, #49A078 100%);
 }
 
+.hunt-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.edit-btn {
+  background: #333;
+  color: #eee;
+  margin-bottom: 0.5rem;
+}
+
+.delete-btn {
+  background: #DF0000;
+  color: #eee;
+  margin-bottom: 0.5rem;
+}
+
 .back-btn {
   background: #eee;
   color: #333;
@@ -78,6 +96,14 @@
 
 .back-btn:hover {
   background: #ddd;
+}
+
+.edit-btn:hover {
+  background: #555;
+}
+
+.delete-btn:hover {
+  background: #B00000;
 }
 
 .messagerie-section h3 {
