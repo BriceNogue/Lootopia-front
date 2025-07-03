@@ -1,27 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule]
+  styleUrl: './login.component.scss',
+  imports: [CommonModule, ReactiveFormsModule]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   // Formulaire de connexion
   loginForm: FormGroup;
-  // État de chargement
-  isLoading: boolean = false;
-  // Message d'erreur
-  errorMessage: string = '';
-  // État de succès
-  showSuccess: boolean = false;
-  welcomeMessage: string = '';
+  
+  // États du composant
+  isLoading = false;
+  errorMessage = '';
+  showSuccess = false;
+  welcomeMessage = '';
 
   constructor(
     private fb: FormBuilder,
@@ -36,7 +34,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Surveillance des changements du formulaire pour réinitialiser les messages d'erreur
+    // Réinitialise les messages d'erreur à chaque changement du formulaire
     this.loginForm.valueChanges.subscribe(() => {
       this.errorMessage = '';
     });
@@ -55,94 +53,64 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
-  // Gestion de la soumission du formulaire
+  // Gestion de la soumission du formulaire de login
   async onSubmit() {
-    console.log('Formulaire soumis', this.loginForm.value);
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
 
       try {
-        // Simulation d'un appel API pour la vérification du profil
-        const userExists = await this.checkUserExists(this.loginForm.value);
-        
-        if (userExists) {
-          // Affichage du message de succès
+        // 1. Appel API de login (POST)
+        const loginResponse: any = await this.http.post('https://lootopia-backend.onrender.com/api/user/login', {
+          mail: this.loginForm.value.email,
+          password: this.loginForm.value.password
+        }).toPromise();
+
+        // 2. Stockage du token dans le localStorage
+        if (loginResponse && loginResponse.access_token) {
+          localStorage.setItem('access_token', loginResponse.access_token);
+        }
+        if (loginResponse && loginResponse.refresh_token) {
+          localStorage.setItem('refresh_token', loginResponse.refresh_token);
+        }
+
+        // 3. Décodage du token pour récupérer l'ID utilisateur
+        let userId: string | undefined;
+        if (loginResponse && loginResponse.access_token) {
+          const decoded: any = jwtDecode(loginResponse.access_token);
+          userId = decoded.id || decoded._id || decoded.user_id;
+          console.log('Token décodé:', decoded);
+          console.log('userId utilisé:', userId);
+          if (userId) {
+            localStorage.setItem('userId', userId);
+          }
+        }
+
+        // 4. Vérification de l'existence de l'utilisateur via un GET
+        if (userId) {
+          const user = await this.http.get<{ username?: string; pseudo?: string }>(`https://lootopia-backend.onrender.com/api/user/${userId}/`).toPromise();
+          // Si l'utilisateur existe, accès autorisé
           this.showSuccess = true;
-          
-          // Simulation de la connexion
-          await this.loginUser(this.loginForm.value);
-          
-          // Redirection vers la landing page après 2 secondes
+          this.welcomeMessage = `Bienvenue ${user && (user.username || user.pseudo || '')} !`;
           setTimeout(() => {
             this.router.navigate(['/landing']);
           }, 2000);
         } else {
-          this.errorMessage = 'Email ou mot de passe incorrect';
+          // Si pas d'ID utilisateur, erreur
+          this.errorMessage = "Impossible de récupérer l'utilisateur.";
         }
-      } catch (error) {
-        console.error('Erreur lors de la connexion:', error);
-        this.errorMessage = 'Une erreur est survenue lors de la connexion';
+      } catch (error: any) {
+        // Gestion des erreurs (login ou GET user)
+        this.errorMessage = error?.error?.message || "Email ou mot de passe incorrect";
       } finally {
         this.isLoading = false;
       }
     } else {
-      // Affichage des erreurs pour tous les champs
+      // Affiche les erreurs pour tous les champs invalides
       Object.keys(this.loginForm.controls).forEach(key => {
         const control = this.loginForm.get(key);
         control?.markAsTouched();
       });
-    }
-  }
-
-  // Simulation de la vérification de l'existence du profil
-  private async checkUserExists(credentials: any): Promise<boolean> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        // Simulation de la vérification (à remplacer par un vrai appel API)
-        console.log('Vérification du profil:', credentials);
-        // Pour le test, on considère que le profil existe si l'email contient '@'
-        const exists = credentials.email.includes('@');
-        console.log('Profil existe:', exists);
-        resolve(exists);
-      }, 1000);
-    });
-  }
-
-  // Simulation de la connexion
-  private async loginUser(credentials: any): Promise<void> {
-    try {
-      const response: any = await this.http.post('https://lootopia-backend.onrender.com/api/user/login', {
-        mail: credentials.email,
-        password: credentials.password
-      }).toPromise();
-      console.log('Réponse API login:', response);
-      // Stockage des tokens si présents dans la réponse
-      if (response && response.access_token) {
-        localStorage.setItem('access_token', response.access_token);
-        console.log('Access token stocké dans le localStorage');
-      }
-      if (response && response.refresh_token) {
-        localStorage.setItem('refresh_token', response.refresh_token);
-        console.log('Refresh token stocké dans le localStorage');
-      }
-      if (response && response.access_token) {
-        // Décodage du token si besoin
-        const decoded: any = jwtDecode(response.access_token);
-        localStorage.setItem('userId', JSON.stringify(decoded.id));
-        this.welcomeMessage = `Bienvenue ${decoded.username || decoded.pseudo || ''} !`;
-      } else if (response && response.username) {
-        this.welcomeMessage = `Bienvenue ${response.username} !`;
-      }
-      this.showSuccess = true;
-      setTimeout(() => {
-        this.welcomeMessage = '';
-        this.router.navigate(['/landing']);
-      }, 2000);
-    } catch (error: any) {
-      console.error('Erreur lors de la connexion:', error);
-      this.errorMessage = error?.error?.message || 'Une erreur est survenue lors de la connexion';
-      throw error;
     }
   }
 
