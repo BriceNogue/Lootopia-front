@@ -91,7 +91,9 @@
 
 .hunts-cards {
     display: flex;
-    height: fit-content;
+    flex-wrap: wrap;
+    width: 100%;
+    // height: fit-content;
     // grid-template-columns: auto auto auto;
     // gap: 2rem;
     // justify-content: space-around;

@@ -103,6 +103,7 @@ export class UserProfilComponent implements OnInit {
     lieu: '',
     monde: '',
     prix: 0,
+    nombre_participant: 0,
     est_prive: false,
     messagerie_est_actif: false,
     date_fin: '',
