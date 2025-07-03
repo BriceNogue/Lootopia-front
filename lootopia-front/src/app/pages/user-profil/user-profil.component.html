@@ -46,6 +46,9 @@
                 <input type="checkbox" [(ngModel)]="nouvelleChasse.messagerie_est_actif" name="messagerie_est_actif" />
                 Messagerie active
             </label>
+            <label>Date de début</label>
+            <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_debut" name="date_debut" required />
+            <label>Date de fin</label>
             <input type="datetime-local" [(ngModel)]="nouvelleChasse.date_fin" name="date_fin" required />
             <button type="submit" [disabled]="!chasseForm.form.valid">Créer</button>
         </form>

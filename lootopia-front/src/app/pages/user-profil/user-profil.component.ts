@@ -112,7 +112,7 @@ export class UserProfilComponent implements OnInit {
     createur: 0,
     participants: [],
     caches: [],
-    themes: []
+    themes: [1]
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UsersService, private huntService: HuntsService) { }
@@ -184,13 +184,14 @@ export class UserProfilComponent implements OnInit {
       this.nouvelleChasse.description &&
       this.nouvelleChasse.lieu &&
       this.nouvelleChasse.monde &&
+      this.nouvelleChasse.date_debut &&
       this.nouvelleChasse.date_fin
     ) {
       const newHunt: CreateHuntModel = {
         titre: this.nouvelleChasse.titre,
         description: this.nouvelleChasse.description,
         createur: this.utilisateur?.id || 0,
-        date_debut: this.nouvelleChasse.date_debut || new Date().toISOString(),
+        date_debut: this.nouvelleChasse.date_debut,
         date_fin: this.nouvelleChasse.date_fin,
         participants: this.nouvelleChasse.participants || [],
         caches: this.nouvelleChasse.caches || [],
@@ -201,16 +202,16 @@ export class UserProfilComponent implements OnInit {
         monde: this.nouvelleChasse.monde || '',
         est_prive: this.nouvelleChasse.est_prive || false,
         messagerie_est_actif: this.nouvelleChasse.messagerie_est_actif || false,
-        themes: this.nouvelleChasse.themes || [],
+        themes: this.nouvelleChasse.themes || [1],
       };
       this.huntService.create(newHunt).subscribe({
         next: (createdHunt) => {
           this.getUserHunts(this.utilisateur?.pseudo || '');
           console.log('Chasse créée avec succès :', createdHunt);
           if ((createdHunt as any).id) {
+            this.resetForm();
             this.goToHuntDetail((createdHunt as any).id);
           }
-          this.resetForm();
         },
         error: (err) => {
           alert('Erreur lors de la création de la chasse. Veuillez réessayer.');
@@ -236,7 +237,7 @@ export class UserProfilComponent implements OnInit {
       createur: 0,
       participants: [],
       caches: [],
-      themes: []
+      themes: [1]
     };
   }
 
