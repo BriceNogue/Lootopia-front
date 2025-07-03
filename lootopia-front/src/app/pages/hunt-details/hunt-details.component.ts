@@ -6,7 +6,7 @@ import { GetHuntModel } from '../../models/hunt.model';
 import { FormsModule } from '@angular/forms';
 import { parseIsoDateTime } from '../../utils/common';
 import { Message } from '../../models/message.model';
-import { getCurentUser } from '../../utils/common';
+import { getCurentUserId } from '../../utils/common';
 import { UserModel } from '../../models/user.model';
 
 @Component({
@@ -20,7 +20,8 @@ export class HuntDetailsComponent {
   loading = true;
   messages: Message[] = [];
   newMessage = '';
-  public curentUser: UserModel | null = null;
+  public curentUserId: number | null = null;
+  private huntId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,16 +32,18 @@ export class HuntDetailsComponent {
   ngOnInit(): void {
     this.getCurentUser();
     const idParam = this.route.snapshot.paramMap.get('id');
-    const id: number | null = idParam !== null ? Number(idParam) : null;
-    this.getHuntById(id);
+    this.huntId = idParam !== null ? Number(idParam) : null;
+    this.getHuntById(this.huntId);
   }
 
   getCurentUser() {
-    const user = getCurentUser();
-    if (user) {
-      this.curentUser = user;
+    const userId = getCurentUserId();
+    if (userId) {
+      this.curentUserId = userId;
     } else {
-      this.curentUser = null;
+      //alert('Vous devez être connecté pour accéder à cette page.');
+      //console.error('Aucun utilisateur connecté trouvé. Redirection vers la page de connexion.');
+      this.curentUserId = null;
       //this.goToLogin();
     }
   }
@@ -81,16 +84,17 @@ export class HuntDetailsComponent {
   }
 
   registerToHunt() {
-    if (!this.curentUser) {
+    if (!this.curentUserId) {
       alert('Vous devez être connecté pour vous inscrire à une chasse.');
       console.error('Utilisateur non connecté. Impossible de s\'inscrire à la chasse.');
       return;
     }
 
-    this.huntsService.registerToHunt(this.hunt.id, this.curentUser?.id || 0).subscribe({
+    this.huntsService.registerToHunt(this.hunt.id, this.curentUserId || 0).subscribe({
       next: () => {
         console.log('Inscription réussie à la chasse !');
-        this.hunt.participants += 1;
+        alert('Inscription réussie à la chasse !');
+        this.getHuntById(this.huntId);
       },
       error: (error) => {
         console.error('Erreur lors de l\'inscription à la chasse :', error);
