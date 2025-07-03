@@ -15,11 +15,11 @@ export function parseIsoDateTime(isoString: string, forTime: string = ''): strin
   return `${day}-${month}-${year} ${forTime} ${hours}:${minutes}`;
 }
 
-export function getCurentUser(): UserModel | null {
+export function getCurentUserId(): number | null {
   // Récupère l'utilisateur actuel depuis le localStorage
-  const user = localStorage.getItem('user');
-  if (user) {
-    return JSON.parse(user) as UserModel;
+  const userId = localStorage.getItem('userId');
+  if (userId) {
+    return JSON.parse(userId) as number;
   }
   return null;
 }

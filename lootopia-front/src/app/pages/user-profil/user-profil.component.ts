@@ -7,7 +7,7 @@ import { parseIsoDateTime } from '../../utils/common';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HuntsService } from '../../services/hunts.service';
-import { getCurentUser } from '../../utils/common';
+import { getCurentUserId } from '../../utils/common';
 
 @Component({
   selector: 'app-user-profil',
@@ -93,7 +93,7 @@ export class UserProfilComponent implements OnInit {
     }
     // Ajoute d'autres chasses si besoin
   ];*/
-  public curentUser: UserModel | null = null;
+  private curentUserId: number | null = null;
 
   // Formulaire de création de chasse : Partial<Typeof HuntModel> permet de ne pas remplir tous les champs
   // et de ne pas avoir d'erreur de type
@@ -116,12 +116,13 @@ export class UserProfilComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    const userId: number | null = idParam !== null ? Number(idParam) : null;
+    // const idParam = this.route.snapshot.paramMap.get('id');
+    // const userId: number | null = idParam !== null ? Number(idParam) : null;
 
-    this.getCurentUser();
+    this.getCurentUserId();
 
-    await this.getUserById(this.curentUser?.id || 0);
+    await this.getUserById(this.curentUserId || 0);
+    console.log('Curent user id :', this.curentUserId);
     console.log('Utilisateur récupéré :', this.utilisateur);
 
     // Si l'utilisateur n'est pas trouvé, on attend qu'il soit défini
@@ -137,12 +138,15 @@ export class UserProfilComponent implements OnInit {
     }
   }
 
-  getCurentUser() {
-    const user = getCurentUser();
-    if (user) {
-      this.curentUser = user;
+  getCurentUserId() {
+    const userId = getCurentUserId();
+    if (userId) {
+      this.curentUserId = userId;
     } else {
-      this.curentUser = null;
+      alert('Vous devez être connecté pour accéder à cette page.');
+      console.error('Aucun utilisateur connecté trouvé. Redirection vers la page de connexion.');
+      this.curentUserId = null;
+      this.utilisateur = null; // Assurez-vous que l'utilisateur est nul si non connecté
       this.goToLogin();
     }
   }
