@@ -1,0 +1,25 @@
+<form class="edit-hunt-form" (ngSubmit)="onSubmit()" #editForm="ngForm">
+    <button type="reset" class=" back-btn" (click)="goBack()">
+        ← Retour
+    </button>
+  <h2>Modifier la chasse</h2>
+  <input type="text" placeholder="Titre" [(ngModel)]="updatedHunt.titre" name="titre" required />
+  <textarea placeholder="Description" [(ngModel)]="updatedHunt.description" name="description" required></textarea>
+  <input type="text" placeholder="Lieu" [(ngModel)]="updatedHunt.lieu" name="lieu" required />
+  <input type="text" placeholder="Monde" [(ngModel)]="updatedHunt.monde" name="monde" required />
+  <input type="number" placeholder="Prix" [(ngModel)]="updatedHunt.prix" name="prix" min="0" required />
+  <input type="number" placeholder="Nombre de participants max" [(ngModel)]="updatedHunt.nombre_participant" name="nombre_participant" min="1" required />
+  <label>
+    <input type="checkbox" [(ngModel)]="updatedHunt.est_prive" name="est_prive" />
+    Privée
+  </label>
+  <label>
+    <input type="checkbox" [(ngModel)]="updatedHunt.messagerie_est_actif" name="messagerie_est_actif" />
+    Messagerie active
+  </label>
+  <label>Date de début :</label>
+  <input type="datetime-local" [(ngModel)]="updatedHunt.date_debut" name="date_debut" required />
+  <label>Date de fin :</label>
+  <input type="datetime-local" [(ngModel)]="updatedHunt.date_fin" name="date_fin" required />
+  <button type="submit" [disabled]="!editForm.form.valid">Enregistrer</button>
+</form>

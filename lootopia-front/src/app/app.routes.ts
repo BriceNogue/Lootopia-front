@@ -8,6 +8,7 @@
     import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
     import { NotFoundComponent } from './pages/not-found/not-found.component';
     import { DashboardAdminComponent } from './pages/admin/dashboard-admin/dashboard-admin.component';
+import { EditHuntComponent } from './pages/edit-hunt/edit-hunt.component';
 
     export const routes: Routes = [
         {
@@ -45,6 +46,10 @@
         {
             path: 'hunt/:id',
             component: HuntDetailsComponent
+        },
+        {
+            path: 'hunt/edit/:id',
+            component: EditHuntComponent
         },
         {
             path: 'admin',

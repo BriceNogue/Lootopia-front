@@ -163,8 +163,8 @@ export class HuntsService {
     );
   }
 
-  public update(huntId: number, hunt: CreateHuntModel): Observable<CreateHuntModel> {
-    return this.http.put<CreateHuntModel>(`${this._HuntsURL}${huntId}/edit/`, hunt).pipe(
+  public update(huntId: number, hunt: GetHuntModel): Observable<CreateHuntModel> {
+    return this.http.put<GetHuntModel>(`${this._HuntsURL}${huntId}/edit/`, hunt).pipe(
       tap((response) => this.log("Update Hunt : " + response)),
       catchError((error) => this.handleError(error, hunt))
     );

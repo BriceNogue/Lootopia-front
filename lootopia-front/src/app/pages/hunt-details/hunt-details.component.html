@@ -5,7 +5,7 @@
       <button class="hunt-action-btn back-btn" (click)="goBack()">
       ← Retour
       </button>
-      <button class="hunt-action-btn edit-btn" *ngIf="hunt.createur == curentUser?.pseudo" (click)="editHunt()">
+      <button class="hunt-action-btn edit-btn" *ngIf="hunt.createur == curentUser?.pseudo" (click)="goToEditHunt()">
         Modifier
       </button>
       <button class="hunt-action-btn delete-btn" *ngIf="hunt.createur == curentUser?.pseudo" (click)="deleteHunt()">

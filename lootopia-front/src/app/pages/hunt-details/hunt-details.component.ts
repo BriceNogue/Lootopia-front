@@ -115,12 +115,8 @@ export class HuntDetailsComponent {
     });
   }
 
-  editHunt() {
-    if (!this.huntId) {
-      console.error('Aucun ID de chasse trouvé pour l\'édition.');
-      return;
-    }
-    this.goBack();
+  goToEditHunt() {
+    this.router.navigate(['/hunt/edit/', this.huntId]);
   }
 
   deleteHunt() {
@@ -134,7 +130,7 @@ export class HuntDetailsComponent {
 
     this.huntsService.delete(this.huntId).subscribe({
       next: () => {
-        console.log('Chasse supprimée avec succès !');
+        console.log('Chasse supprimée avec succès ! id:', this.huntId);
         alert('Chasse supprimée avec succès !');
         this.goBack();
       },

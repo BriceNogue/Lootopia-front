@@ -40,11 +40,16 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
+    if(!confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      return;
+    }
+
+    // Clear user data from localStorage
     localStorage.removeItem('userId');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     this.hasUser = false;
-    this.router.navigate(['/landing']);
+    this.router.navigate(['/login']);
   }
 
   getCurentUser() {
