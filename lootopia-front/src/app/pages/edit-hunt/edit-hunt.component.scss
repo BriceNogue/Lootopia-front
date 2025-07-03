@@ -1,0 +1,67 @@
+.edit-hunt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+
+  h2 {
+    color: #49A078;
+    margin-bottom: 1rem;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="datetime-local"],
+  textarea {
+    padding: 0.7rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  label {
+    font-size: 1rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  button {
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background: #49A078;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  .back-btn {
+  width: fit-content;
+  background: #eee;
+  color: #333;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.back-btn:hover {
+  background: #ddd;
+}
+}
