@@ -61,4 +61,25 @@ export class UsersService {
       catchError((error) => this.handleError(error, []))
     );
   }
+
+  public create(user: UserModel) {
+    return this.http.post<UserModel>(this._URL + 'create/', user).pipe(
+      tap((response) => this.log('Create User : ' + response)),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
+
+  public update(id: number, user: UserModel) {
+    return this.http.put<UserModel>(`${this._URL}${id}/edit/`, user).pipe(
+      tap((response) => this.log('Update User : ' + response)),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
+
+  public delete(id: number) {
+    return this.http.delete(`${this._URL}${id}/delete/`).pipe(
+      tap((response) => this.log('Delete User : ' + response)),
+      catchError((error) => this.handleError(error, null))
+    );
+  }
 }

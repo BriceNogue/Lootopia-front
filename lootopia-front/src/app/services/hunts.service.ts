@@ -157,7 +157,7 @@ export class HuntsService {
   }
 
   public create(hunt: CreateHuntModel): Observable<CreateHuntModel> {
-    return this.http.post<CreateHuntModel>(this._HuntsURL+"create/", hunt).pipe(
+    return this.http.post<CreateHuntModel>(this._HuntsURL + "create/", hunt).pipe(
       tap((response) => this.log("Create Hunt : " + response)),
       catchError((error) => this.handleError(error, hunt))
     );
@@ -171,7 +171,7 @@ export class HuntsService {
   }
 
   public delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this._HuntsURL}${id}delete/`).pipe(
+    return this.http.delete<void>(`${this._HuntsURL}${id}/delete/`).pipe(
       tap(() => this.log(`Delete Hunt with ID: ${id}`)),
       catchError((error) => this.handleError(error, undefined))
     );

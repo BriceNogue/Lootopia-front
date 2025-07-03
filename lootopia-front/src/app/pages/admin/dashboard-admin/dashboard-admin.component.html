@@ -3,21 +3,19 @@
     <h2>Gestion des Chasses</h2>
     <!-- Formulaire inline pour créer/éditer une chasse -->
     <form [formGroup]="huntForm" (ngSubmit)="onSubmit()" class="hunt-form">
-      <input formControlName="title" placeholder="Titre" required />
-      <input formControlName="location" placeholder="Lieu" required />
-      <input formControlName="startDate" type="date" placeholder="Date début" required />
-      <input formControlName="endDate" type="date" placeholder="Date fin" required />
-      <input formControlName="price" type="number" placeholder="Prix" required />
-      <input formControlName="reward" type="number" placeholder="Récompense" required />
-      <input formControlName="maxParticipants" type="number" placeholder="Max participants" required />
-      <input formControlName="difficulty" placeholder="Difficulté" />
+      <input formControlName="titre" placeholder="Titre" required />
       <input formControlName="description" placeholder="Description" />
+      <input formControlName="lieu" placeholder="Lieu" required />
+      <input formControlName="prix" type="number" placeholder="Prix" required />
+      <input formControlName="date_debut" type="datetime-local" placeholder="Date début" required />
+      <input formControlName="date_fin" type="datetime-local" placeholder="Date fin" required />
       <label>
-        <input formControlName="isPrivate" type="checkbox" /> Privée
+        <input formControlName="est_prive" type="checkbox" /> Privée
       </label>
       <button type="submit" class="btn-create">{{ isEditing ? 'Modifier' : 'Créer' }}</button>
       <button *ngIf="isEditing" type="button" (click)="cancelEdit()">Annuler</button>
     </form>
+    
     <div *ngIf="error" class="error">{{ error }}</div>
     <div *ngIf="loading">Chargement...</div>
     <table class="hunts-table" *ngIf="!loading">
@@ -48,9 +46,55 @@
   </section>
   <section class="admin-section">
     <h2>Gestion des Utilisateurs</h2>
-    <!-- Section CRUD Utilisateurs -->
-    <div id="crud-users">
-      <!-- Contenu à venir -->
-    </div>
+    <!-- Messages -->
+    <div *ngIf="userSuccess" class="success">{{ userSuccess }}</div>
+    <div *ngIf="userError" class="error">{{ userError }}</div>
+    <div *ngIf="loadingUsers">Chargement des utilisateurs...</div>
+
+    <!-- Recherche -->
+    <input type="text" placeholder="Rechercher par pseudo ou mail" [(ngModel)]="userSearch" class="user-search" />
+
+    <!-- Formulaire utilisateur -->
+    <form [formGroup]="userForm" (ngSubmit)="onSubmitUser()" class="user-form">
+      <input formControlName="pseudo" placeholder="Pseudo" required />
+      <input formControlName="mail" placeholder="Email" required />
+      <input formControlName="solde_couronne" type="number" placeholder="Solde Couronne" />
+      <input formControlName="date_activation" type="date" placeholder="Date activation" />
+      <input formControlName="date_desactivation" type="date" placeholder="Date désactivation" />
+      <label>
+        <input formControlName="creerChasse" type="checkbox" /> Peut créer des chasses
+      </label>
+      <button type="submit" class="btn-create">{{ isEditingUser ? 'Modifier' : 'Créer' }}</button>
+      <button *ngIf="isEditingUser" type="button" (click)="cancelEditUser()">Annuler</button>
+    </form>
+
+    <!-- Tableau utilisateurs -->
+    <table class="users-table" *ngIf="!loadingUsers && users.length">
+      <thead>
+        <tr>
+          <th>Pseudo</th>
+          <th>Email</th>
+          <th>Solde</th>
+          <th>Activation</th>
+          <th>Désactivation</th>
+          <th>Créer chasse</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users | userFilter:userSearch">
+          <td>{{ user.pseudo }}</td>
+          <td>{{ user.mail }}</td>
+          <td>{{ user.solde_couronne }}</td>
+          <td>{{ user.date_activation | date:'shortDate' }}</td>
+          <td>{{ user.date_desactivation | date:'shortDate' }}</td>
+          <td>{{ user.creerChasse ? 'Oui' : 'Non' }}</td>
+          <td>
+            <button class="btn-edit" (click)="editUser(user)">Modifier</button>
+            <button class="btn-delete" (click)="deleteUser(user.id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </div>

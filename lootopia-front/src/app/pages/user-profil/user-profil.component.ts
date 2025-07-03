@@ -105,8 +105,13 @@ export class UserProfilComponent implements OnInit {
     prix: 0,
     est_prive: false,
     messagerie_est_actif: false,
-    date_debut: "",
-    date_fin: "",
+    date_fin: '',
+    nombre_participant: 0,
+    couleur: '',
+    createur: 0,
+    participants: [],
+    caches: [],
+    themes: []
   };
 
   constructor(private route: ActivatedRoute, private router: Router, private userService: UsersService, private huntService: HuntsService) { }
@@ -178,34 +183,31 @@ export class UserProfilComponent implements OnInit {
       this.nouvelleChasse.description &&
       this.nouvelleChasse.lieu &&
       this.nouvelleChasse.monde &&
-      this.nouvelleChasse.date_debut &&
       this.nouvelleChasse.date_fin
     ) {
       const newHunt: CreateHuntModel = {
-        id: 0,
         titre: this.nouvelleChasse.titre,
         description: this.nouvelleChasse.description,
-        createur: this.utilisateur?.id || 0, // Utiliser l'ID de l'utilisateur connecté
-        date_debut: this.nouvelleChasse.date_debut,
+        createur: this.utilisateur?.id || 0,
         date_fin: this.nouvelleChasse.date_fin,
-        participants: [],
-        caches: [],
-        couleur: '000000',
+        participants: this.nouvelleChasse.participants || [],
+        caches: this.nouvelleChasse.caches || [],
+        couleur: this.nouvelleChasse.couleur || '000000',
         prix: this.nouvelleChasse.prix || 0,
-        nombre_participant: 0,
+        nombre_participant: this.nouvelleChasse.nombre_participant || 0,
         lieu: this.nouvelleChasse.lieu || '',
         monde: this.nouvelleChasse.monde || '',
         est_prive: this.nouvelleChasse.est_prive || false,
         messagerie_est_actif: this.nouvelleChasse.messagerie_est_actif || false,
-        themes: [1]
+        themes: this.nouvelleChasse.themes || [],
       };
       this.huntService.create(newHunt).subscribe({
         next: (createdHunt) => {
-          //alert('Chasse créée avec succès !');
           this.getUserHunts(this.utilisateur?.pseudo || '');
           console.log('Chasse créée avec succès :', createdHunt);
-          this.goToHuntDetail(createdHunt.id);
-          // Réinitialiser le formulaire après la création
+          if ((createdHunt as any).id) {
+            this.goToHuntDetail((createdHunt as any).id);
+          }
           this.resetForm();
         },
         error: (err) => {
@@ -219,16 +221,21 @@ export class UserProfilComponent implements OnInit {
   // Méthode pour réinitialiser le formulaire de création de chasse
   resetForm() {
     this.nouvelleChasse = {
-        titre: '',
-        description: '',
-        lieu: '',
-        monde: '',
-        prix: 0,
-        est_prive: false,
-        messagerie_est_actif: false,
-        date_debut: "",
-        date_fin: "",
-      };
+      titre: '',
+      description: '',
+      lieu: '',
+      monde: '',
+      prix: 0,
+      est_prive: false,
+      messagerie_est_actif: false,
+      date_fin: '',
+      nombre_participant: 0,
+      couleur: '',
+      createur: 0,
+      participants: [],
+      caches: [],
+      themes: []
+    };
   }
 
   public goToHuntDetail(id: number): void {

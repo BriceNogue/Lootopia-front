@@ -35,20 +35,19 @@ export interface GetHuntModel {
 }
 
 export interface CreateHuntModel {
-    id: number;
     participants: number[];
     caches: number[];
-    description: string;
-    createur: number;
     titre: string;
     couleur: string;
     prix: number;
-    date_debut: string;
     date_fin: string;
     nombre_participant: number;
     lieu: string;
     monde: string;
     est_prive: boolean;
     messagerie_est_actif: boolean;
+    createur: number;
     themes: number[];
-}
+    description?: string;
+  }
+  
