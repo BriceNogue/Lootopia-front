@@ -89,12 +89,17 @@ export class LoginComponent {
         // 4. Vérification de l'existence de l'utilisateur via un GET
         if (userId) {
           const user = await this.http.get<{ username?: string; pseudo?: string }>(`https://lootopia-backend.onrender.com/api/user/${userId}/`).toPromise();
-          // Si l'utilisateur existe, accès autorisé
-          this.showSuccess = true;
-          this.welcomeMessage = `Bienvenue ${user && (user.username || user.pseudo || '')} !`;
-          setTimeout(() => {
-            this.router.navigate(['/landing']);
-          }, 2000);
+          if (user) {
+            // Si l'utilisateur existe, accès autorisé
+            this.showSuccess = true;
+            this.welcomeMessage = `Bienvenue ${user && (user.username || user.pseudo || '')} !`;
+            setTimeout(() => {
+              window.location.href = '/landing';
+            }, 2000);
+          } else {
+            // Si l'utilisateur n'existe pas, pas de rechargement
+            this.errorMessage = "Impossible de récupérer l'utilisateur.";
+          }
         } else {
           // Si pas d'ID utilisateur, erreur
           this.errorMessage = "Impossible de récupérer l'utilisateur.";
