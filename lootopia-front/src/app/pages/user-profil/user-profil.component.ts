@@ -7,6 +7,7 @@ import { parseIsoDateTime } from '../../utils/common';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HuntsService } from '../../services/hunts.service';
+import { getCurentUser } from '../../utils/common';
 
 @Component({
   selector: 'app-user-profil',
@@ -92,6 +93,7 @@ export class UserProfilComponent implements OnInit {
     }
     // Ajoute d'autres chasses si besoin
   ];*/
+  public curentUser: UserModel | null = null;
 
   // Formulaire de création de chasse : Partial<Typeof HuntModel> permet de ne pas remplir tous les champs
   // et de ne pas avoir d'erreur de type
@@ -117,7 +119,9 @@ export class UserProfilComponent implements OnInit {
     const idParam = this.route.snapshot.paramMap.get('id');
     const userId: number | null = idParam !== null ? Number(idParam) : null;
 
-    await this.getUserById(userId || 0);
+    this.getCurentUser();
+
+    await this.getUserById(this.curentUser?.id || 0);
     console.log('Utilisateur récupéré :', this.utilisateur);
 
     // Si l'utilisateur n'est pas trouvé, on attend qu'il soit défini
@@ -131,6 +135,20 @@ export class UserProfilComponent implements OnInit {
     if (this.utilisateur && this.utilisateur.pseudo) {
       this.getUserHunts(this.utilisateur.pseudo);
     }
+  }
+
+  getCurentUser() {
+    const user = getCurentUser();
+    if (user) {
+      this.curentUser = user;
+    } else {
+      this.curentUser = null;
+      this.goToLogin();
+    }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 
   public parseIsoDateTime(isoString: string, forTime: string =''): string {

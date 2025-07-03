@@ -10,12 +10,15 @@
     </button>
     <nav class="header-nav" [class.active]="isMenuOpen">
         <a routerLink="/landing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
-        <a routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Register</a>
-        <a routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a>
-        <a routerLink="/user-profile/3" routerLinkActive="active" (click)="closeMenu()">User profile</a>
-        <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Dashboard</a>
-        <a routerLink="/hunt-details/1" routerLinkActive="active" (click)="closeMenu()">Hunt details</a>
-        <a routerLink="/not-found" routerLinkActive="active" (click)="closeMenu()">Not found</a>
-        <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Admin</a>
+        @if (!hasUser) {
+            <a routerLink="/register" routerLinkActive="active" (click)="closeMenu()">Register</a>
+        }
+        <!-- <a routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a> -->
+        @if (hasUser && curentUser) {
+            <a routerLink="/dashboard" routerLinkActive="active" (click)="closeMenu()">Dashboard</a>
+            <a routerLink="/user-profile" routerLinkActive="active" (click)="closeMenu()">Profile</a>
+            <a routerLink="/admin" routerLinkActive="active" (click)="closeMenu()">Admin</a>
+            <a routerLink="/logout" (click)="logOut(); closeMenu()">Logout</a>
+        }
     </nav>
 </header>

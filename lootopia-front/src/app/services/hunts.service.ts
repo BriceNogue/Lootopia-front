@@ -176,4 +176,18 @@ export class HuntsService {
       catchError((error) => this.handleError(error, undefined))
     );
   }
+
+  public registerToHunt(huntId: number, userId: number): Observable<void> {
+    return this.http.post<void>(`${this._HuntsURL}${huntId}rejoindre/`, userId).pipe(
+      tap(() => this.log(`Register User ${userId} to Hunt ${huntId}`)),
+      catchError((error) => this.handleError(error, undefined))
+    );
+  }
+
+  public unregisterFromHunt(huntId: number, userId: number): Observable<void> {
+    return this.http.post<void>(`${this._HuntsURL}${huntId}quitter/`, userId).pipe(
+      tap(() => this.log(`Unregister User ${userId} from Hunt ${huntId}`)),
+      catchError((error) => this.handleError(error, undefined))
+    );
+  }
 }

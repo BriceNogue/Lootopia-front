@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent implements OnInit {
+export class LandingComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly huntsService = inject(HuntsService);
 

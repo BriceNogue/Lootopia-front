@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HuntsService } from '../../services/hunts.service';
 import { GetHuntModel } from '../../models/hunt.model';
 import { FormsModule } from '@angular/forms';
 import { parseIsoDateTime } from '../../utils/common';
 import { Message } from '../../models/message.model';
+import { getCurentUser } from '../../utils/common';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-hunt-details',
@@ -18,16 +20,33 @@ export class HuntDetailsComponent {
   loading = true;
   messages: Message[] = [];
   newMessage = '';
+  public curentUser: UserModel | null = null;
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    private router: Router,
     private huntsService: HuntsService
   ) {}
 
   ngOnInit(): void {
+    this.getCurentUser();
     const idParam = this.route.snapshot.paramMap.get('id');
     const id: number | null = idParam !== null ? Number(idParam) : null;
     this.getHuntById(id);
+  }
+
+  getCurentUser() {
+    const user = getCurentUser();
+    if (user) {
+      this.curentUser = user;
+    } else {
+      this.curentUser = null;
+      //this.goToLogin();
+    }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 
   private getHuntById(id: number | null): void {
@@ -62,8 +81,21 @@ export class HuntDetailsComponent {
   }
 
   registerToHunt() {
-    // Ajoute ici la logique d'inscription
-    alert("Inscription à la chasse !");
+    if (!this.curentUser) {
+      alert('Vous devez être connecté pour vous inscrire à une chasse.');
+      console.error('Utilisateur non connecté. Impossible de s\'inscrire à la chasse.');
+      return;
+    }
+
+    this.huntsService.registerToHunt(this.hunt.id, this.curentUser?.id || 0).subscribe({
+      next: () => {
+        console.log('Inscription réussie à la chasse !');
+        this.hunt.participants += 1;
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'inscription à la chasse :', error);
+      }
+    });
   }
 
   goBack() {

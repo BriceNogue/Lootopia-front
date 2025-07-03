@@ -35,7 +35,7 @@
             component: ForgotPasswordComponent
         },
         {
-            path: 'user-profile/:id',
+            path: 'user-profile',
             component: UserProfilComponent
         },
         {
@@ -43,7 +43,7 @@
             component: DashboardComponent
         },
         {
-            path: 'hunt-details/:id',
+            path: 'hunt/:id',
             component: HuntDetailsComponent
         },
         {
