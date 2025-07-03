@@ -40,6 +40,7 @@ export interface CreateHuntModel {
     titre: string;
     couleur: string;
     prix: number;
+    date_debut: string;
     date_fin: string;
     nombre_participant: number;
     lieu: string;
